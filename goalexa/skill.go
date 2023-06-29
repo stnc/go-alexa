@@ -16,6 +16,7 @@ import (
 
 /*
 utterance = tr = soyleyis ifade bicimi , ses cikarma  adIrIns speak
+slot = yuva , yarik, yerlestirmek sLat
 */
 type RequestHandler interface {
 	CanHandle(context.Context, *Skill, *alexaapi.RequestRoot) bool
