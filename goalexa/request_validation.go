@@ -27,6 +27,7 @@ func validateAlexaRequest(w http.ResponseWriter, r *http.Request) error {
 
 	// Verify certificate URL
 	if !verifyCertURL(certURL) {
+		fmt.Println("Invalid certificate ")
 		return fmt.Errorf("Invalid certificate url: %q", certURL)
 	}
 
@@ -39,6 +40,7 @@ func validateAlexaRequest(w http.ResponseWriter, r *http.Request) error {
 	if time.Now().Unix() < cert.NotBefore.Unix() || time.Now().Unix() > cert.NotAfter.Unix() {
 		cachedCert = nil
 		// try again
+		fmt.Println("time-- error")
 		return validateAlexaRequest(w, r)
 	}
 
@@ -57,6 +59,7 @@ func validateAlexaRequest(w http.ResponseWriter, r *http.Request) error {
 
 	err = rsa.VerifyPKCS1v15(publicKey.(*rsa.PublicKey), crypto.SHA1, hash.Sum(nil), encryptedSig)
 	if err != nil {
+		fmt.Println("Invalid Amazon certificate signature")
 		return fmt.Errorf("Invalid Amazon certificate signature: %v", err)
 	}
 

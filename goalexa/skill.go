@@ -10,10 +10,13 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/aivahealth/goalexa/alexaapi"
+	"avia/goalexa/alexaapi"
 	"go.uber.org/zap"
 )
 
+/*
+utterance = tr = soyleyis ifade bicimi , ses cikarma  adIrIns speak
+*/
 type RequestHandler interface {
 	CanHandle(context.Context, *Skill, *alexaapi.RequestRoot) bool
 	Handle(context.Context, *Skill, *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error)
@@ -55,11 +58,18 @@ func (s *Skill) RegisterHandlers(handler ...RequestHandler) {
 
 func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
-
-	//if err := validateAlexaRequest(w, r); err != nil {
-	//	w.WriteHeader(http.StatusBadRequest)
-	//	return
-	//}
+	if os.Getenv("APP_ENV") == "production" {
+		if err := validateAlexaRequest(w, r); err != nil {
+			fmt.Println(err)
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+	}
+	cfg := zap.NewProductionConfig()
+	cfg.OutputPaths = []string{
+		"myproject.log",
+	}
+	cfg.Build()
 
 	requestJson, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -84,6 +94,7 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err = json.Unmarshal(requestJson, &root)
 	if err != nil {
 		Logger.Error("ServeHTTP failed", zap.Error(err))
+		fmt.Println("dddServeHTTP failed", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -103,6 +114,7 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	err = alexaapi.SetRequestViaLookahead(ctx, &root, requestJson)
 	if err != nil {
 		Logger.Error("ServeHTTP failed", zap.Error(err))
+		fmt.Println("ServeHTTP failed", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
@@ -118,6 +130,7 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: fallback handler for when no handler takes the request
 	response, err := s.handlers.Handle(ctx, s, &root)
+	fmt.Println("ServeHTTP failed444", zap.Error(err))
 	if err != nil {
 		Logger.Error("ServeHTTP failed", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
@@ -125,6 +138,8 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if response == nil {
+		fmt.Println("ServeHTTP nil", zap.Error(err))
+
 		if os.Getenv("GOALEXA_DUMP") != "" {
 			Logger.Debug("<- <- <- To Alexa (http 200, empty body)")
 		}
@@ -134,12 +149,16 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	responseJson, err := json.Marshal(response)
 	if err != nil {
+		fmt.Println("ServeHTTP reee", zap.Error(err))
+
 		Logger.Error("ServeHTTP failed", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	_, err = io.Copy(w, bytes.NewReader(responseJson))
+	fmt.Println("ServeHTTP NewReader", zap.Error(err))
+
 	if err != nil {
 		Logger.Error("ServeHTTP failed", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
