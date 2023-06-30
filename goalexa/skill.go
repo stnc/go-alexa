@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"log"
 	"net/http"
 	"os"
 
@@ -14,10 +15,6 @@ import (
 	"go.uber.org/zap"
 )
 
-/*
-utterance = tr = soyleyis ifade bicimi , ses cikarma  adIrIns speak
-slot = yuva , yarik, yerlestirmek sLat
-*/
 type RequestHandler interface {
 	CanHandle(context.Context, *Skill, *alexaapi.RequestRoot) bool
 	Handle(context.Context, *Skill, *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error)
@@ -57,6 +54,9 @@ func (s *Skill) RegisterHandlers(handler ...RequestHandler) {
 	s.handlers = append(s.handlers, handler...)
 }
 
+// ServeHTTP burasinin amaci yazilacak
+// in the DefaultServeMux.
+// The documentation for ServeMux explains how patterns are matched.
 func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 	if os.Getenv("APP_ENV") == "production" {
@@ -66,11 +66,6 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
-	cfg := zap.NewProductionConfig()
-	cfg.OutputPaths = []string{
-		"myproject.log",
-	}
-	cfg.Build()
 
 	requestJson, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -93,6 +88,13 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	var root alexaapi.RequestRoot
 	err = json.Unmarshal(requestJson, &root)
+
+	empJSON, err := json.MarshalIndent(&root, "", "  ")
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+	fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
+
 	if err != nil {
 		Logger.Error("ServeHTTP failed", zap.Error(err))
 		fmt.Println("dddServeHTTP failed", zap.Error(err))
