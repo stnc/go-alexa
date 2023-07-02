@@ -9,7 +9,6 @@ import (
 	"go.uber.org/zap"
 	"io"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 )
@@ -27,8 +26,40 @@ func (hg HandlerGroup) Handle(ctx context.Context, s *Skill, reqRoot *alexaapi.R
 			return h.Handle(ctx, s, reqRoot)
 		}
 	}
+	x := true
+	var response alexaapi.ResponseRoot
+	response.Version = "1"
+	response.SessionAttributes = make(map[string]interface{}) //https://dev.to/rytsh/embed-map-in-json-output-5dnj
+	response.SessionAttributes["read"] = true
+	response.SessionAttributes["category"] = true
 
-	return nil, fmt.Errorf("No handler found for request (%q)", reqRoot.Request.GetType())
+	text := "Hi man How are you "
+	types := alexaapi.OutputSpeechTypePlainText
+
+	response.Response.OutputSpeech.Type = types
+	response.Response.OutputSpeech.Text = text
+
+	var myCard alexaapi.Card
+	myCard.Title = "CatFeeder"
+	myCard.Content = "selman content"
+	myCard.Type = alexaapi.CardTypeSimple
+	response.Response.Card = &myCard
+
+	var myOutputSpeech alexaapi.OutputSpeech
+	myOutputSpeech.Text = text
+	myOutputSpeech.Type = types
+	response.Response.Reprompt.OutputSpeech = &myOutputSpeech
+
+	response.Response.ShouldEndSession = &x
+
+	//empJSON, err := json.MarshalIndent(reqRoot, "", "  ")
+	//if err != nil {
+	//	log.Fatalf(err.Error())
+	//}
+	//fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
+
+	return &response, nil
+	//return nil, fmt.Errorf("No handler found for request (%q)", reqRoot.Request.GetType())
 }
 
 type Skill struct {
@@ -81,11 +112,7 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		var requestJsonPretty []byte
 		if os.Getenv("GOALEXA_DUMP") == "full" {
 			fmt.Println("girer")
-
 			requestJsonPretty, _ = json.MarshalIndent(trash, "", "    ")
-
-			fmt.Printf("MarshalIndent funnction output\n %s\n", string(requestJsonPretty))
-
 		} else {
 			fmt.Println("girer2")
 			requestJsonPretty, _ = json.MarshalIndent(trash["request"], "", "    ")
@@ -123,6 +150,12 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
+	////stncjson
+	//empJSON, err := json.MarshalIndent(&root, "", "  ")
+	//if err != nil {
+	//	log.Fatalf(err.Error())
+	//}
+	//fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
 
 	if root.Directive.Header.Namespace != "" {
 		err = alexaapi.SetEnvelopePayloadViaLookahead(ctx, &root.Directive, requestJson)
@@ -135,87 +168,46 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	//TODO: fallback handler for when no handler takes the request
+	response, err := s.handlers.Handle(ctx, s, &root)
 
-	//response, err = s.handlers.Handle(ctx, s, &root)
-	//
-	//if err != nil {
-	//	Logger.Error("ServeHTTP failed", zap.Error(err))
-	//	w.WriteHeader(http.StatusInternalServerError)
-	//	fmt.Println("ServeHTTP failed444", zap.Error(err))
-	//	return
-	//}	//if err != nil {
-	//	Logger.Error("ServeHTTP failed", zap.Error(err))
-	//	w.WriteHeader(http.StatusInternalServerError)
-	//	fmt.Println("ServeHTTP failed444", zap.Error(err))
-	//	return
-	//}
-
-	x := true
-	//types := alexaapi.CardTypeSimple
-	var response alexaapi.ResponseRoot
-
-	response.Version = "1"
-	response.SessionAttributes = make(map[string]interface{}) //https://dev.to/rytsh/embed-map-in-json-output-5dnj
-	response.SessionAttributes["read"] = true
-	response.SessionAttributes["category"] = true
-
-	text := "sddsd"
-	types := alexaapi.OutputSpeechTypePlainText
-
-	response.Response.OutputSpeech.Type = types
-	response.Response.OutputSpeech.Text = text
-
-	var myCard alexaapi.Card
-	myCard.Title = "CatFeeder"
-	myCard.Content = "selman content"
-	myCard.Type = alexaapi.CardTypeSimple
-	response.Response.Card = &myCard
-
-	var myOutputSpeech alexaapi.OutputSpeech
-	myOutputSpeech.Text = "ddd"
-	myOutputSpeech.Type = alexaapi.OutputSpeechTypePlainText
-	response.Response.Reprompt.OutputSpeech = &myOutputSpeech
-
-	response.Response.ShouldEndSession = &x
-	//responseJson, _ := json.Marshal(response)
-	empJSON, err := json.MarshalIndent(response, "", "  ")
 	if err != nil {
-		log.Fatalf(err.Error())
+		fmt.Println("res empty", zap.Error(err))
+		Logger.Error("ServeHTTP failed", zap.Error(err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
-	fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
-	//_, err = io.Copy(w, bytes.NewReader(responseJson))
+	if response == nil {
+		fmt.Println("ServeHTTP nil", zap.Error(err))
+
+		if os.Getenv("GOALEXA_DUMP") != "" {
+			Logger.Debug("<- <- <- To Alexa (http 200, empty body)")
+		}
+
+		w.WriteHeader(http.StatusOK)
+		return
+	}
+
 	responseJson, err := json.Marshal(response)
+	if err != nil {
+		fmt.Println("ServeHTTP reee", zap.Error(err))
+
+		Logger.Error("ServeHTTP failed", zap.Error(err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
 	_, err = io.Copy(w, bytes.NewReader(responseJson))
-	//if response == nil {
-	//	fmt.Println("ServeHTTP nil", zap.Error(err))
-	//
-	//	if os.Getenv("GOALEXA_DUMP") != "" {
-	//		Logger.Debug("<- <- <- To Alexa (http 200, empty body)")
-	//	}
-	//
-	//	w.WriteHeader(http.StatusOK)
-	//	return
-	//}
-	//
-	//responseJson, err := json.Marshal(response)
-	//if err != nil {
-	//	fmt.Println("ServeHTTP reee", zap.Error(err))
-	//
-	//	Logger.Error("ServeHTTP failed", zap.Error(err))
-	//	w.WriteHeader(http.StatusInternalServerError)
-	//	return
-	//}
-	//
-	//_, err = io.Copy(w, bytes.NewReader(responseJson))
-	//
-	//if err != nil {
-	//	fmt.Println("ServeHTTP NewReader", zap.Error(err))
-	//	Logger.Error("ServeHTTP failed", zap.Error(err))
-	//	w.WriteHeader(http.StatusInternalServerError)
-	//	return
-	//}
+
+	if err != nil {
+
+		fmt.Println("ServeHTTP NewReader", zap.Error(err))
+		Logger.Error("ServeHTTP failed", zap.Error(err))
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
 
 	if os.Getenv("GOALEXA_DUMP") != "" {
+		fmt.Println("ServeHTTP dump", zap.Error(err))
 		responseJsonPretty, _ := json.MarshalIndent(&response, "", "    ")
 		Logger.Debug(fmt.Sprintf("<- <- <- To Alexa: %s", string(responseJsonPretty)))
 	}

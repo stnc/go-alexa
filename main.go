@@ -4,6 +4,7 @@ import (
 	"avia/goalexa"
 	"avia/goalexa/alexaapi"
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
 	"log"
@@ -59,6 +60,7 @@ func main() {
 	//goalexa.HandlerGroup{}
 
 	test := goalexa.NewSkill("amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763")
+	test.RegisterHandlers()
 	http.HandleFunc("/", test.ServeHTTP)
 	var port string = "8090"
 	fmt.Println("server running localhost:" + port)
@@ -109,4 +111,41 @@ func (h *HelloWorld) Handle2(ctx context.Context, skill *goalexa.Skill, requestR
 	//response.ShouldSessionEnd = true
 	//
 	return nil, nil
+}
+func main2() {
+	x := true
+	//types := alexaapi.CardTypeSimple
+	var response alexaapi.ResponseRoot
+
+	response.Version = "1"
+	response.SessionAttributes = make(map[string]interface{}) //https://dev.to/rytsh/embed-map-in-json-output-5dnj
+	response.SessionAttributes["read"] = true
+	response.SessionAttributes["category"] = true
+
+	text := "sddsd"
+	types := alexaapi.OutputSpeechTypePlainText
+
+	response.Response.OutputSpeech.Type = types
+	response.Response.OutputSpeech.Text = text
+
+	var myCard alexaapi.Card
+	myCard.Title = "CatFeeder"
+	myCard.Content = "selman content"
+	myCard.Type = alexaapi.CardTypeSimple
+	response.Response.Card = &myCard
+
+	var myOutputSpeech alexaapi.OutputSpeech
+	myOutputSpeech.Text = "ddd"
+	myOutputSpeech.Type = alexaapi.OutputSpeechTypePlainText
+	response.Response.Reprompt.OutputSpeech = &myOutputSpeech
+
+	response.Response.ShouldEndSession = &x
+	//responseJson, _ := json.Marshal(response)
+	empJSON, err := json.MarshalIndent(response, "", "  ")
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+	fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
+	//_, err = io.Copy(w, bytes.NewReader(responseJson))
+
 }
