@@ -14,9 +14,9 @@ const (
 )
 
 type Response struct {
-	OutputSpeech     *OutputSpeech     `json:"outputSpeech,omitempty"`
+	OutputSpeech     OutputSpeech      `json:"outputSpeech,omitempty"`
 	Card             *Card             `json:"card,omitempty"`
-	Reprompt         *Reprompt         `json:"reprompt,omitempty"`
+	Reprompt         Reprompt          `json:"reprompt,omitempty"` //selman pointer
 	ShouldEndSession *bool             `json:"shouldEndSession,omitempty"`
 	Directives       []any             `json:"directives,omitempty"`
 	CanFulfillIntent *CanFulfillIntent `json:"canFulfillIntent,omitempty"`
