@@ -24,6 +24,7 @@ app.launch(function(req, res) {
     title: "MOE Dummy Restaurant",
     text: outputText
   });
+  
 
   res.say(outputSpeech).reprompt(promptText).shouldEndSession(false);
 });

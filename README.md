@@ -13,3 +13,6 @@ rm /tmp/selman.sha1
 sudo openssl base64 -d -in signature.sha1 -out /tmp/selman.sha1
 sudo openssl dgst -sha1 -verify public.key -signature /tmp/selman.sha1 selman.sha1
 rm /tmp/selman.sha1
+
+Indent = girinti prononce inndent 
+intent = niyet - amac gayet intent

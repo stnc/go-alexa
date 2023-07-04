@@ -6,5 +6,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="alexa-master" />
+    <orderEntry type="module" module-name="calculator" />
   </component>
 </module>

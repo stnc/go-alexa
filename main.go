@@ -4,7 +4,6 @@ import (
 	"avia/goalexa"
 	"avia/goalexa/alexaapi"
 	"context"
-	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
 	"log"
@@ -51,7 +50,8 @@ func init() {
 	}
 }
 
-type HelloWorld struct{}
+type LaunchReq struct{}
+type MakeReservationReq struct{}
 
 func main() {
 
@@ -60,92 +60,101 @@ func main() {
 	//goalexa.HandlerGroup{}
 
 	test := goalexa.NewSkill("amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763")
-	test.RegisterHandlers()
+	test.RegisterHandlers(&LaunchReq{}, &MakeReservationReq{})
+
 	http.HandleFunc("/", test.ServeHTTP)
-	var port string = "8090"
+	var port string = "9092"
 	fmt.Println("server running localhost:" + port)
+
 	http.ListenAndServe(":"+port, nil)
 
-	//this struct  not acces -- only access Config value
-	//emp1 := goalexa.Skill{
-	//	Config:
-	//}
-
-	//test.RegisterHandlers()
-	//var e1 goalexa.HandlerGroup
-	//
-	//e1.Handle()
-
-	//var skill goalexa.Skill
-	//skill.Config
-
 }
 
-// OnLaunch called with a reqeust is received of type LaunchRequest
-func (h *HelloWorld) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
+func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
 
-	log.Printf("OnLaunch requestId=%s, sessionId=%s", requestRoot.Request.GetRequestId(), skill.Config)
-	//speechText := "Welcome to the Alexa Skills Kit, you can say hello"
-	//
-	//log.Printf("OnLaunch requestId=%s, sessionId=%s", request.RequestID, session.SessionID)
-	//
-	//response.SetSimpleCard(cardTitle, speechText)
-	//response.SetOutputText(speechText)
-	//response.SetRepromptText(speechText)
-	//
-	//response.ShouldSessionEnd = true
-	//
-	return nil, nil
-}
-func (h *HelloWorld) Handle2(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
-
-	log.Printf("OnLaunch requestId=%s, sessionId=%s", requestRoot.Request.GetRequestId(), skill.Config)
-	//speechText := "Welcome to the Alexa Skills Kit, you can say hello"
-	//
-	//log.Printf("OnLaunch requestId=%s, sessionId=%s", request.RequestID, session.SessionID)
-	//
-	//response.SetSimpleCard(cardTitle, speechText)
-	//response.SetOutputText(speechText)
-	//response.SetRepromptText(speechText)
-	//
-	//response.ShouldSessionEnd = true
-	//
-	return nil, nil
-}
-func main2() {
-	x := true
-	//types := alexaapi.CardTypeSimple
+	x := false
 	var response alexaapi.ResponseRoot
 
+	//response.Response.CanFulfillIntent.Slots
+
 	response.Version = "1"
-	response.SessionAttributes = make(map[string]interface{}) //https://dev.to/rytsh/embed-map-in-json-output-5dnj
+	response.SessionAttributes = make(map[string]interface{})
 	response.SessionAttributes["read"] = true
 	response.SessionAttributes["category"] = true
 
-	text := "sddsd"
+	text := "Hi man How are you "
 	types := alexaapi.OutputSpeechTypePlainText
 
-	response.Response.OutputSpeech.Type = types
-	response.Response.OutputSpeech.Text = text
+	var myOutputSpeech alexaapi.OutputSpeech
+
+	myOutputSpeech.Text = text
+	myOutputSpeech.Type = types
+
+	response.Response.OutputSpeech = &myOutputSpeech
 
 	var myCard alexaapi.Card
-	myCard.Title = "CatFeeder"
-	myCard.Content = "selman content"
+	myCard.Title = "deneme"
+	myCard.Content = text
 	myCard.Type = alexaapi.CardTypeSimple
-	response.Response.Card = &myCard
 
-	var myOutputSpeech alexaapi.OutputSpeech
-	myOutputSpeech.Text = "ddd"
-	myOutputSpeech.Type = alexaapi.OutputSpeechTypePlainText
+	response.Response.Card = &myCard
 	response.Response.Reprompt.OutputSpeech = &myOutputSpeech
 
 	response.Response.ShouldEndSession = &x
-	//responseJson, _ := json.Marshal(response)
-	empJSON, err := json.MarshalIndent(response, "", "  ")
-	if err != nil {
-		log.Fatalf(err.Error())
-	}
-	fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
-	//_, err = io.Copy(w, bytes.NewReader(responseJson))
+
+	return &response, nil
 
 }
+func (h *LaunchReq) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
+	return true
+}
+func (h *MakeReservationReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
+
+	res := requestRoot.Request.GetType()
+	if res == "IntentRequest" {
+		x := true
+		var response alexaapi.ResponseRoot
+		response.Version = "1"
+		response.SessionAttributes = make(map[string]interface{})
+		response.SessionAttributes["read"] = true
+		response.SessionAttributes["category"] = true
+
+		text := "farkli bir  "
+		types := alexaapi.OutputSpeechTypePlainText
+
+		var myOutputSpeech alexaapi.OutputSpeech
+
+		myOutputSpeech.Text = text
+		myOutputSpeech.Type = types
+
+		response.Response.OutputSpeech = &myOutputSpeech
+
+		var myCard alexaapi.Card
+		myCard.Title = "CatFeeder"
+		myCard.Content = "selman content"
+		myCard.Type = alexaapi.CardTypeSimple
+		response.Response.Card = &myCard
+
+		response.Response.Reprompt.OutputSpeech = &myOutputSpeech
+
+		response.Response.ShouldEndSession = &x
+
+		//empJSON, err := json.MarshalIndent(reqRoot, "", "  ")
+		//if err != nil {
+		//	log.Fatalf(err.Error())
+		//}
+		//fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
+
+		return &response, nil
+	}
+
+}
+func (h *MakeReservationReq) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
+	return true
+}
+
+//empJSON, err := json.MarshalIndent(reqRoot, "", "  ")
+//if err != nil {
+//	log.Fatalf(err.Error())
+//}
+//fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))

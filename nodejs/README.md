@@ -1,8 +1,8 @@
 
-amazon linkine ..../alexa/restaurant-bot
+amazon link ..../alexa/restaurant-bot
 
 
-ana dizinde nodemon server.js calistir 
+main folder  "nodemon server.js" run or "node server.js"
 
 
 # myonlineedu-alexa-nodejs-restaurant-bot

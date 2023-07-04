@@ -1,0 +1,151 @@
+{
+    "version": "1.0",
+    "session": {
+        "new": false,
+        "sessionId": "amzn1.echo-api.session.4efa76e6-4f02-4b90-9377-25bb33181681",
+        "application": {
+            "applicationId": "amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763"
+        },
+        "attributes": {
+            "read": true,
+            "category": true
+        },
+        "user": {
+            "userId": "amzn1.ask.account.AMASNF3KSDMAQSKOF7U4UGDKWHFGWCTU562KUYGJZEI55LHUIZ44QZI3CFTJHNFVQGJTXLQ735FLVXU7UML4O5MJCED4AKG7XGNIVNQTV4V3GDTC6W2RAMYKZNSZ6TCGJNEM7ZNRFIRXNWAPYCJIK6UQVP4LQCT4JZAC4VZGLNGKX3WF2IVDMCOXT2XCKQOAF42X7IAHZWHTQ7TJ5HDFYR37OXMQXMWOKVW3JAHD7BXA"
+        }
+    },
+    "context": {
+        "Viewports": [
+            {
+                "type": "APL",
+                "id": "main",
+                "shape": "RECTANGLE",
+                "dpi": 213,
+                "presentationType": "STANDARD",
+                "canRotate": false,
+                "configuration": {
+                    "current": {
+                        "mode": "HUB",
+                        "video": {
+                            "codecs": [
+                                "H_264_42",
+                                "H_264_41"
+                            ]
+                        },
+                        "size": {
+                            "type": "DISCRETE",
+                            "pixelWidth": 1280,
+                            "pixelHeight": 800
+                        }
+                    }
+                }
+            }
+        ],
+        "Viewport": {
+            "experiences": [
+                {
+                    "arcMinuteWidth": 346,
+                    "arcMinuteHeight": 216,
+                    "canRotate": false,
+                    "canResize": false
+                }
+            ],
+            "mode": "HUB",
+            "shape": "RECTANGLE",
+            "pixelWidth": 1280,
+            "pixelHeight": 800,
+            "dpi": 213,
+            "currentPixelWidth": 1280,
+            "currentPixelHeight": 800,
+            "touch": [
+                "SINGLE"
+            ],
+            "video": {
+                "codecs": [
+                    "H_264_42",
+                    "H_264_41"
+                ]
+            }
+        },
+        "Extensions": {
+            "available": {
+                "aplext:backstack:10": {}
+            }
+        },
+        "System": {
+            "application": {
+                "applicationId": "amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763"
+            },
+            "user": {
+                "userId": "amzn1.ask.account.AMASNF3KSDMAQSKOF7U4UGDKWHFGWCTU562KUYGJZEI55LHUIZ44QZI3CFTJHNFVQGJTXLQ735FLVXU7UML4O5MJCED4AKG7XGNIVNQTV4V3GDTC6W2RAMYKZNSZ6TCGJNEM7ZNRFIRXNWAPYCJIK6UQVP4LQCT4JZAC4VZGLNGKX3WF2IVDMCOXT2XCKQOAF42X7IAHZWHTQ7TJ5HDFYR37OXMQXMWOKVW3JAHD7BXA"
+            },
+            "device": {
+                "deviceId": "amzn1.ask.device.AMAQI7M2YXDYCE4CUDTV5I3VCIGOEND2XD52AAWEFWWYLLNFH76GGVO2CNE2ZQ7I3DLF42P2KEIS63BG2TEKJFAMQUVBX7EIWP43BVXKCDBTGQM37OWGHEJBYB2KSMPPFINUBJGKIKIIVETAEQRYYQO4RHMOQU6K6SALVZLDG4ME26C4SJRR2YURY2EG5ZM3YGFSWAEW73A74VOZ",
+                "supportedInterfaces": {}
+            },
+            "apiEndpoint": "https://api.amazonalexa.com",
+            "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjcyZDhjZTM1LTY1MzItNDgxZi1hZWNiLWI3MTQ5MDE1Zjc2MyIsImV4cCI6MTY4ODUwNDc4NywiaWF0IjoxNjg4NTA0NzI3LCJuYmYiOjE2ODg1MDQ3MjcsInByaXZhdGVDbGFpbXMiOnsiY29udGV4dCI6IkFBQUFBQUFBQUFEU2RnVCthRlBJM0EwQW04dnhQK0JOS3dFQUFBQUFBQUJ5VjhmRUc2QlhraytKWFdzcG5vaDNuWmxjSW16SjdobE1HWlliSTJnMDRuWjhIZUJvTTY4T01QS2hZS1g1bzdJcjNYbHIya0tvemxuM21nL0wrL0ZTRmJVU0doR2RzWWwzb0V5K0dLTm9CaFVjZDB5UGdoSXVtTDNaV25JWGwyVTd4OW5NWm5uMm9TcFE1L0F5VWw2Q1lhSWVzdU1OaWVhZERmVTZYZERHTmtVNUFrd0tnS21YNnRhYW9DRXd2MEV5VEYrSkJxTWI0NW5sQ3FXcmZxWDdWVlRScTNub3hXSWVwRGVrcU1jOVh3eHpuZ01RcGpKcVMrbGpyRlpsWGxTNVhYSVd5SGxBZnJWK3dXTXl1VDJ1bUd3LzV4dnNNNHMyV0lnSERyTHZNTGNWcXk1MitXaUtZN3k3R0pKcXJOUFhiMjI5djlWVGMxTkhnRURidHpOR1pCS0xsa0xZeHl6MStBM0hhamN6UVdLRkN6WVhHeUxKVFhOclg3K1RzY3F3dWtITlZONk1qMDkzTXc9PSIsImRldmljZUlkIjoiYW16bjEuYXNrLmRldmljZS5BTUFRSTdNMllYRFlDRTRDVURUVjVJM1ZDSUdPRU5EMlhENTJBQVdFRldXWUxMTkZINzZHR1ZPMkNORTJaUTdJM0RMRjQyUDJLRUlTNjNCRzJURUtKRkFNUVVWQlg3RUlXUDQzQlZYS0NEQlRHUU0zN09XR0hFSkJZQjJLU01QUEZJTlVCSkdLSUtJSVZFVEFFUVJZWVFPNFJITU9RVTZLNlNBTFZaTERHNE1FMjZDNFNKUlIyWVVSWTJFRzVaTTNZR0ZTV0FFVzczQTc0Vk9aIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQU1BU05GM0tTRE1BUVNLT0Y3VTRVR0RLV0hGR1dDVFU1NjJLVVlHSlpFSTU1TEhVSVo0NFFaSTNDRlRKSE5GVlFHSlRYTFE3MzVGTFZYVTdVTUw0TzVNSkNFRDRBS0c3WEdOSVZOUVRWNFYzR0RUQzZXMlJBTVlLWk5TWjZUQ0dKTkVNN1pOUkZJUlhOV0FQWUNKSUs2VVFWUDRMUUNUNEpaQUM0VlpHTE5HS1gzV0YySVZETUNPWFQyWENLUU9BRjQyWDdJQUhaV0hUUTdUSjVIREZZUjM3T1hNUVhNV09LVlczSkFIRDdCWEEifX0.gY_a2pMiVnlSxEtBxcWGWw9gQKWtqp2KoQcNyd5LGJrn0_gR5Ez8V0mhjf4MWMbS4KlJGNwdzgZoOyFb8zhWcZyhLAVMvJWhi0p2D9d0JqzRXjKDABHt6RMJcItG_o2HgEFel70j9ijA0ONXF2qzcSKdsaBQN1n_J82C5IOWE14M-GW6421QOlrx-UQFPQTt7ZFxlxXyDu5TL2I5MmFu0YnybuwG00UbG1uf40dpVDMcODl2EDO83S474TGG3C1DvmBJomXIXJUJCN2olzgyUgPUHvLNxivx6RjEHiA0jLJw9GpVYBlnyK3jg8A3LPSBj-ltQDvyK_JS1HYfAOVROA"
+        }
+    },
+    "request": {
+        "type": "IntentRequest",
+        "requestId": "amzn1.echo-api.request.28769492-1aaa-425d-ad5d-b6879483925b",
+        "locale": "en-US",
+        "timestamp": "2023-07-04T21:05:27Z",
+        "intent": {
+            "name": "MakeReservation",
+            "confirmationStatus": "NONE",
+            "slots": {
+                "NumberOfPeople": {
+                    "name": "NumberOfPeople",
+                    "value": "5",
+                    "confirmationStatus": "NONE",
+                    "source": "USER"
+                },
+                "ReservationTime": {
+                    "name": "ReservationTime",
+                    "value": "18:00",
+                    "confirmationStatus": "NONE",
+                    "source": "USER"
+                },
+                "RestaurantLocation": {
+                    "name": "RestaurantLocation",
+                    "value": "Mumbai",
+                    "resolutions": {
+                        "resolutionsPerAuthority": [
+                            {
+                                "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763.RestLocationCity",
+                                "status": {
+                                    "code": "ER_SUCCESS_MATCH"
+                                },
+                                "values": [
+                                    {
+                                        "value": {
+                                            "name": "Mumbai",
+                                            "id": "8ebaad59980c95ade797c903761fa815"
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "confirmationStatus": "NONE",
+                    "source": "USER"
+                },
+                "PersonName": {
+                    "name": "PersonName",
+                    "value": "Shane",
+                    "confirmationStatus": "NONE",
+                    "source": "USER"
+                },
+                "ReservationDate": {
+                    "name": "ReservationDate",
+                    "value": "2020-01-15",
+                    "confirmationStatus": "NONE",
+                    "source": "USER"
+                }
+            }
+        },
+        "dialogState": "COMPLETED"
+    }
+}
