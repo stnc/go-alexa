@@ -4,6 +4,7 @@ import (
 	"avia/goalexa"
 	"avia/goalexa/alexaapi"
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
 	"log"
@@ -51,16 +52,11 @@ func init() {
 }
 
 type LaunchReq struct{}
-type MakeReservationReq struct{}
 
 func main() {
 
-	//var h goalexa.RequestHandler
-	//h = Shandler(1)
-	//goalexa.HandlerGroup{}
-
 	test := goalexa.NewSkill("amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763")
-	test.RegisterHandlers(&LaunchReq{}, &MakeReservationReq{})
+	test.RegisterHandlers(&LaunchReq{})
 
 	http.HandleFunc("/", test.ServeHTTP)
 	var port string = "9092"
@@ -71,55 +67,23 @@ func main() {
 }
 
 func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
-
-	x := false
+	x := true
 	var response alexaapi.ResponseRoot
-
-	//response.Response.CanFulfillIntent.Slots
-
 	response.Version = "1"
 	response.SessionAttributes = make(map[string]interface{})
 	response.SessionAttributes["read"] = true
 	response.SessionAttributes["category"] = true
+	intentName := requestRoot.Request.GetType()
+	fmt.Println(intentName)
 
-	text := "Hi man How are you "
-	types := alexaapi.OutputSpeechTypePlainText
+	empJSON, err := json.MarshalIndent(response, "", "  ")
+	if err != nil {
+		log.Fatalf(err.Error())
+	}
+	fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
 
-	var myOutputSpeech alexaapi.OutputSpeech
-
-	myOutputSpeech.Text = text
-	myOutputSpeech.Type = types
-
-	response.Response.OutputSpeech = &myOutputSpeech
-
-	var myCard alexaapi.Card
-	myCard.Title = "deneme"
-	myCard.Content = text
-	myCard.Type = alexaapi.CardTypeSimple
-
-	response.Response.Card = &myCard
-	response.Response.Reprompt.OutputSpeech = &myOutputSpeech
-
-	response.Response.ShouldEndSession = &x
-
-	return &response, nil
-
-}
-func (h *LaunchReq) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
-	return true
-}
-func (h *MakeReservationReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
-
-	res := requestRoot.Request.GetType()
-	if res == "IntentRequest" {
-		x := true
-		var response alexaapi.ResponseRoot
-		response.Version = "1"
-		response.SessionAttributes = make(map[string]interface{})
-		response.SessionAttributes["read"] = true
-		response.SessionAttributes["category"] = true
-
-		text := "farkli bir  "
+	if intentName == "LaunchRequest" {
+		text := "Welcome to the drug reminder application"
 		types := alexaapi.OutputSpeechTypePlainText
 
 		var myOutputSpeech alexaapi.OutputSpeech
@@ -130,26 +94,45 @@ func (h *MakeReservationReq) Handle(ctx context.Context, skill *goalexa.Skill, r
 		response.Response.OutputSpeech = &myOutputSpeech
 
 		var myCard alexaapi.Card
-		myCard.Title = "CatFeeder"
-		myCard.Content = "selman content"
+		myCard.Title = "Drug reminder "
+		myCard.Content = text
 		myCard.Type = alexaapi.CardTypeSimple
 		response.Response.Card = &myCard
 
 		response.Response.Reprompt.OutputSpeech = &myOutputSpeech
 
 		response.Response.ShouldEndSession = &x
-
-		//empJSON, err := json.MarshalIndent(reqRoot, "", "  ")
-		//if err != nil {
-		//	log.Fatalf(err.Error())
-		//}
-		//fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
-
-		return &response, nil
 	}
 
+	if intentName == "IntentRequest" {
+		//if ($EchoReqObj->request->intent->name == "CatFeederFeed"){
+		//
+		//}
+
+		text := "Welcome to the drug reminder application"
+		types := alexaapi.OutputSpeechTypePlainText
+
+		var myOutputSpeech alexaapi.OutputSpeech
+
+		myOutputSpeech.Text = text
+		myOutputSpeech.Type = types
+
+		response.Response.OutputSpeech = &myOutputSpeech
+
+		var myCard alexaapi.Card
+		myCard.Title = "Drug reminder "
+		myCard.Content = text
+		myCard.Type = alexaapi.CardTypeSimple
+		response.Response.Card = &myCard
+
+		response.Response.Reprompt.OutputSpeech = &myOutputSpeech
+
+		response.Response.ShouldEndSession = &x
+	}
+	return &response, nil
+
 }
-func (h *MakeReservationReq) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
+func (h *LaunchReq) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
 	return true
 }
 
