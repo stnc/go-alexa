@@ -76,11 +76,22 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if os.Getenv("GOALEXA_DUMP") != "" {
 		trash := map[string]any{}
 		json.Unmarshal(requestJson, &trash)
+
+		//var intent alexaapi.RequestIntentRequest
+
 		var requestJsonPretty []byte
 		if os.Getenv("GOALEXA_DUMP") == "full" {
 			requestJsonPretty, _ = json.MarshalIndent(trash, "", "    ")
 		} else {
 			requestJsonPretty, _ = json.MarshalIndent(trash["request"], "", "    ")
+			var intent alexaapi.RequestIntentRequest
+			err = json.Unmarshal(requestJsonPretty, &intent)
+			//fmt.Printf("MarshalIndent funnction output\n %s\n", (requestJsonPretty)) // header request all data here --selman
+			//empJSON, err := json.MarshalIndent(intent, "", "  ")
+			//if err != nil {
+			//	log.Fatalf(err.Error())
+			//}
+			//fmt.Printf("MarshalIndent funnction only intent output\n %s\n", string(empJSON))
 		}
 		Logger.Debug(fmt.Sprintf("-> -> -> From Alexa: %s", string(requestJsonPretty)))
 	}

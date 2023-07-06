@@ -55,11 +55,11 @@ type LaunchReq struct{}
 
 func main() {
 
-	test := goalexa.NewSkill("amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763")
-	test.RegisterHandlers(&LaunchReq{})
+	skill := goalexa.NewSkill("amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763")
+	skill.RegisterHandlers(&LaunchReq{})
 
-	http.HandleFunc("/", test.ServeHTTP)
-	var port string = "9092"
+	http.HandleFunc("/", skill.ServeHTTP)
+	var port string = "9091"
 	fmt.Println("server running localhost:" + port)
 
 	http.ListenAndServe(":"+port, nil)
@@ -67,20 +67,25 @@ func main() {
 }
 
 func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
-	x := true
-	var response alexaapi.ResponseRoot
-	response.Version = "1"
-	response.SessionAttributes = make(map[string]interface{})
-	response.SessionAttributes["read"] = true
-	response.SessionAttributes["category"] = true
+
 	intentName := requestRoot.Request.GetType()
 	fmt.Println(intentName)
 
-	empJSON, err := json.MarshalIndent(response, "", "  ")
+	var response alexaapi.ResponseRoot
+	response.Version = "1"
+	x := true
+	response.SessionAttributes = make(map[string]interface{})
+	response.SessionAttributes["read"] = true
+	response.SessionAttributes["category"] = true
+
+	requestJson := requestRoot.Request.GetRequestJson()
+	trash := map[string]any{}
+	json.Unmarshal(requestJson, &trash)
+	empJSON, err := json.MarshalIndent(trash, "", "  ")
 	if err != nil {
 		log.Fatalf(err.Error())
 	}
-	fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
+	fmt.Printf("MarshalIndent funnction only intent output\n %s\n", string(empJSON))
 
 	if intentName == "LaunchRequest" {
 		text := "Welcome to the drug reminder application"
@@ -130,14 +135,7 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		response.Response.ShouldEndSession = &x
 	}
 	return &response, nil
-
 }
 func (h *LaunchReq) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
 	return true
 }
-
-//empJSON, err := json.MarshalIndent(reqRoot, "", "  ")
-//if err != nil {
-//	log.Fatalf(err.Error())
-//}
-//fmt.Printf("MarshalIndent funnction output\n %s\n", string(empJSON))
