@@ -2,7 +2,7 @@ var AlexaAppServer = require("alexa-app-server");
 
 AlexaAppServer.start({
   server_root: __dirname,
-  port: 9093,
+  port: 9094,
   public_html: "public_html",   // Static content
   app_dir: "apps",              // Location of alexa-app modules
   app_root: "/alexa/",          // Service root

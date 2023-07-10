@@ -3,11 +3,14 @@ package main
 import (
 	"avia/goalexa"
 	"avia/goalexa/alexaapi"
+	"bufio"
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
+	"os"
 )
 
 // import 	"github.com/aivahealth/goalexa/alexaapi"
@@ -62,8 +65,8 @@ func main() {
 	skill := goalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa")
 	skill.RegisterHandlers(&LaunchReq{})
 
-	http.HandleFunc("/alexa", skill.ServeHTTP)
-	var port string = "9093"
+	http.HandleFunc("/alexa/restaurant-bot", skill.ServeHTTP)
+	var port string = "9095"
 	fmt.Println("server running localhost:" + port)
 
 	http.ListenAndServe(":"+port, nil)
@@ -72,18 +75,16 @@ func main() {
 
 func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
 
-	intentName := requestRoot.Request.GetType()
-	fmt.Println(intentName)
+	requestType := requestRoot.Request.GetType()
+	fmt.Println(requestType)
 
 	var response alexaapi.ResponseRoot
-	response.Version = "10.0"
+	response.Version = "7.0"
 	x := false
+
 	response.SessionAttributes = make(map[string]interface{})
 	response.SessionAttributes["read"] = true
 	response.SessionAttributes["category"] = true
-	//
-	//https://ad7d-2601-681-6000-3d20-4869-d67b-584c-e749.ngrok-free.app/alexa/restaurant-bot
-
 	// TODO: how does this code work
 	//requestJson := requestRoot.Request.GetRequestJson()
 
@@ -95,29 +96,22 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 	//}
 	//fmt.Printf("MarshalIndent funnction only intent output\n %s\n", string(empJSON))
 
-	//requestJson := requestRoot.Request.GetRequestJson()
-	//var requestIntent alexaapi.RequestIntentRequest
-	//json.Unmarshal(requestJson, &requestIntent)
-	//fmt.Println(requestIntent.Intent.Name)
-	//intentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
-	//fmt.Println(intentValue)
+	if requestType == "LaunchRequest" {
 
-	if intentName == "LaunchRequest" {
-		text := "Welcome to the diet reminder application"
-		types := alexaapi.OutputSpeechTypePlainText
+		text := "Hi! Welcome to sesame Restaurant for selmantunc.com How can I help you today? amazon"
 
 		var myOutputSpeech alexaapi.OutputSpeech
 
 		myOutputSpeech.Text = text
-		myOutputSpeech.Type = types
-		myOutputSpeech.SSML = "<speak>Hi! Welcome to sesame Restaurant for selmantunc.com How can I help you today? amazon</speak>"
+		myOutputSpeech.Type = alexaapi.OutputSpeechTypeSSML
+		myOutputSpeech.SSML = "<speak>" + text + "</speak>"
 
 		response.Response.OutputSpeech = &myOutputSpeech
 
 		var myCard alexaapi.Card
 		myCard.Title = "diet reminder "
 		myCard.Content = text
-		myCard.Type = alexaapi.CardTypeSimple
+		myCard.Type = alexaapi.CardTypeStandard
 		response.Response.Card = &myCard
 
 		response.Response.Reprompt.OutputSpeech = &myOutputSpeech
@@ -125,12 +119,17 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		response.Response.ShouldEndSession = &x
 	}
 
-	if intentName == "IntentRequest" {
-		//if ($EchoReqObj->request->intent->name == "CatFeederFeed"){
-		//
-		//}
+	if requestType == "IntentRequest" {
+		//TODO remain works ... save data and helper function, look go alaexa skill project
+		requestJson := requestRoot.Request.GetRequestJson()
+		var requestIntent alexaapi.RequestIntentRequest
+		json.Unmarshal(requestJson, &requestIntent)
+		fmt.Println(requestIntent.Intent.Name)
+		intentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
+		fmt.Println(intentValue)
 
-		text := "burasi intent"
+		response.Response.Directives = nil
+		text := "Ok Save successful "
 		types := alexaapi.OutputSpeechTypePlainText
 
 		var myOutputSpeech alexaapi.OutputSpeech
@@ -141,17 +140,35 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		response.Response.OutputSpeech = &myOutputSpeech
 
 		var myCard alexaapi.Card
-		myCard.Title = "burasi intent title"
-		myCard.Content = "intent icerik"
-		myCard.Type = alexaapi.CardTypeSimple
+		myCard.Title = "test title"
+		myCard.Content = "bal content"
+		myCard.Type = alexaapi.CardTypeStandard
 		response.Response.Card = &myCard
 
 		response.Response.Reprompt.OutputSpeech = &myOutputSpeech
 
 		response.Response.ShouldEndSession = &x
+
 	}
 	return &response, nil
 }
 func (h *LaunchReq) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
 	return true
+}
+
+func fileAdd(data []string) {
+	file, err := os.OpenFile("test.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+
+	if err != nil {
+		log.Fatalf("failed creating file: %s", err)
+	}
+
+	datawriter := bufio.NewWriter(file)
+
+	for _, data := range data {
+		_, _ = datawriter.WriteString(data + "\n")
+	}
+
+	datawriter.Flush()
+	file.Close()
 }
