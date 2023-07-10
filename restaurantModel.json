@@ -1,5 +1,3 @@
-
-
 {
   "interactionModel": {
     "languageModel": {
@@ -42,20 +40,20 @@
           "name": "MakeReservation",
           "slots": [
             {
+              "name": "ReservationDate",
+              "type": "AMAZON.DATE",
+              "samples": [
+                "make reservation on  {ReservationDate} ",
+                "on {ReservationDate} is"
+              ]
+            },
+            {
               "name": "NumberOfPeople",
               "type": "AMAZON.NUMBER",
               "samples": [
                 "{NumberOfPeople} people",
                 "reservation for {NumberOfPeople} person",
                 "there will be {NumberOfPeople} people"
-              ]
-            },
-            {
-              "name": "ReservationDate",
-              "type": "AMAZON.DATE",
-              "samples": [
-                "make reservation on  {ReservationDate} ",
-                "on {ReservationDate} is"
               ]
             },
             {
@@ -149,21 +147,21 @@
           "prompts": {},
           "slots": [
             {
-              "name": "NumberOfPeople",
-              "type": "AMAZON.NUMBER",
-              "confirmationRequired": false,
-              "elicitationRequired": true,
-              "prompts": {
-                "elicitation": "Elicit.Slot.1522305734164.775729794010"
-              }
-            },
-            {
               "name": "ReservationDate",
               "type": "AMAZON.DATE",
               "confirmationRequired": false,
               "elicitationRequired": true,
               "prompts": {
                 "elicitation": "Elicit.Slot.1522305734164.699413466631"
+              }
+            },
+            {
+              "name": "NumberOfPeople",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1522305734164.775729794010"
               }
             },
             {

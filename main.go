@@ -4,7 +4,6 @@ import (
 	"avia/goalexa"
 	"avia/goalexa/alexaapi"
 	"context"
-	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
 	"log"
@@ -42,6 +41,11 @@ go ile rouer yazmak https://benhoyt.com/writings/go-routing/ ve https://golangdo
 //https://github.com/NerdCademyDev/golang  burada generic var
 //https://gosamples.dev/enum/ https://articles.wesionary.team/working-with-constants-and-iota-in-golang-460c64792d40  const ile auto inc
 
+
+test yazmak
+https://github.com/jakubsuchy/amazon-alexa-php
+
+go kucuk kodlamar ornegi
 */
 
 func init() {
@@ -55,11 +59,11 @@ type LaunchReq struct{}
 
 func main() {
 
-	skill := goalexa.NewSkill("amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763")
+	skill := goalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa")
 	skill.RegisterHandlers(&LaunchReq{})
 
-	http.HandleFunc("/", skill.ServeHTTP)
-	var port string = "9091"
+	http.HandleFunc("/alexa", skill.ServeHTTP)
+	var port string = "9093"
 	fmt.Println("server running localhost:" + port)
 
 	http.ListenAndServe(":"+port, nil)
@@ -72,34 +76,46 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 	fmt.Println(intentName)
 
 	var response alexaapi.ResponseRoot
-	response.Version = "1"
-	x := true
+	response.Version = "10.0"
+	x := false
 	response.SessionAttributes = make(map[string]interface{})
 	response.SessionAttributes["read"] = true
 	response.SessionAttributes["category"] = true
+	//
+	//https://ad7d-2601-681-6000-3d20-4869-d67b-584c-e749.ngrok-free.app/alexa/restaurant-bot
 
-	requestJson := requestRoot.Request.GetRequestJson()
-	trash := map[string]any{}
-	json.Unmarshal(requestJson, &trash)
-	empJSON, err := json.MarshalIndent(trash, "", "  ")
-	if err != nil {
-		log.Fatalf(err.Error())
-	}
-	fmt.Printf("MarshalIndent funnction only intent output\n %s\n", string(empJSON))
+	// TODO: how does this code work
+	//requestJson := requestRoot.Request.GetRequestJson()
+
+	//requestIntent := map[string]any{}
+	//json.Unmarshal(requestJson, &requestIntent)
+	//empJSON, err := json.MarshalIndent(requestIntent, "", "  ")
+	//if err != nil {
+	//	log.Fatalf(err.Error())
+	//}
+	//fmt.Printf("MarshalIndent funnction only intent output\n %s\n", string(empJSON))
+
+	//requestJson := requestRoot.Request.GetRequestJson()
+	//var requestIntent alexaapi.RequestIntentRequest
+	//json.Unmarshal(requestJson, &requestIntent)
+	//fmt.Println(requestIntent.Intent.Name)
+	//intentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
+	//fmt.Println(intentValue)
 
 	if intentName == "LaunchRequest" {
-		text := "Welcome to the drug reminder application"
+		text := "Welcome to the diet reminder application"
 		types := alexaapi.OutputSpeechTypePlainText
 
 		var myOutputSpeech alexaapi.OutputSpeech
 
 		myOutputSpeech.Text = text
 		myOutputSpeech.Type = types
+		myOutputSpeech.SSML = "<speak>Hi! Welcome to sesame Restaurant for selmantunc.com How can I help you today? amazon</speak>"
 
 		response.Response.OutputSpeech = &myOutputSpeech
 
 		var myCard alexaapi.Card
-		myCard.Title = "Drug reminder "
+		myCard.Title = "diet reminder "
 		myCard.Content = text
 		myCard.Type = alexaapi.CardTypeSimple
 		response.Response.Card = &myCard
@@ -114,7 +130,7 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		//
 		//}
 
-		text := "Welcome to the drug reminder application"
+		text := "burasi intent"
 		types := alexaapi.OutputSpeechTypePlainText
 
 		var myOutputSpeech alexaapi.OutputSpeech
@@ -125,8 +141,8 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		response.Response.OutputSpeech = &myOutputSpeech
 
 		var myCard alexaapi.Card
-		myCard.Title = "Drug reminder "
-		myCard.Content = text
+		myCard.Title = "burasi intent title"
+		myCard.Content = "intent icerik"
 		myCard.Type = alexaapi.CardTypeSimple
 		response.Response.Card = &myCard
 

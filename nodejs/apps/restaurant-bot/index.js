@@ -14,9 +14,9 @@ app.launch(function(req, res) {
   
   console.log('Inside MOE Restaurant Bot launch...');
 
-  var outputSpeech = "Hi! Welcome to Dummy Restaurant for MyOnlinEdu dot com. How can I help you today?";
-  var outputText = "Hi! Welcome to Dummy Restaurant for MyOnlinEdu.com. How can I help you today?";
-  var promptText = "Hi! Welcome to Dummy Restaurant for MyOnlinEdu.com. How can I help you today?";
+  var outputSpeech = "Hi! Welcome to Dummy Restaurant for MyOnlinEdu dot com. How can I help you today? amazon";
+  var outputText = "Hi! Welcome to Dummy Restaurant for MyOnlinEdu.com. How can I help you today? amazon";
+  var promptText = "Hi! Welcome to Dummy Restaurant for MyOnlinEdu.com. How can I help you today? amazon";
 
   //Send response
   res.card({

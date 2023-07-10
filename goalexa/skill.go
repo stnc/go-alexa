@@ -84,8 +84,8 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			requestJsonPretty, _ = json.MarshalIndent(trash, "", "    ")
 		} else {
 			requestJsonPretty, _ = json.MarshalIndent(trash["request"], "", "    ")
-			var intent alexaapi.RequestIntentRequest
-			err = json.Unmarshal(requestJsonPretty, &intent)
+			//var intent alexaapi.RequestIntentRequest
+			//err = json.Unmarshal(requestJsonPretty, &intent)
 			//fmt.Printf("MarshalIndent funnction output\n %s\n", (requestJsonPretty)) // header request all data here --selman
 			//empJSON, err := json.MarshalIndent(intent, "", "  ")
 			//if err != nil {
@@ -113,12 +113,14 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			zap.String("req_skill_id", root.Context.System.Application.ApplicationId),
 			zap.String("cfg_skill_id", s.applicationId),
 		)
+		//fmt.Println("app id")
 		w.WriteHeader(http.StatusBadRequest)
 		return
 	}
 
 	err = alexaapi.SetRequestViaLookahead(ctx, &root, requestJson)
 	if err != nil {
+		//fmt.Println("SetRequestViaLookahead")
 		Logger.Error("ServeHTTP failed", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -127,6 +129,7 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if root.Directive.Header.Namespace != "" {
 		err = alexaapi.SetEnvelopePayloadViaLookahead(ctx, &root.Directive, requestJson)
 		if err != nil {
+			//fmt.Println("SetEnvelopePayloadViaLookahead")
 			Logger.Error("ServeHTTP failed", zap.Error(err))
 			w.WriteHeader(http.StatusInternalServerError)
 			return
@@ -136,6 +139,7 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	// TODO: fallback handler for when no handler takes the request
 	response, err := s.handlers.Handle(ctx, s, &root)
 	if err != nil {
+		//fmt.Println("handlers.Handl")
 		Logger.Error("ServeHTTP failed", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
@@ -152,12 +156,14 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	responseJson, err := json.Marshal(response)
 	if err != nil {
 		Logger.Error("ServeHTTP failed", zap.Error(err))
+		//fmt.Println("json.Marshal(response)")
 		w.WriteHeader(http.StatusInternalServerError)
 		return
 	}
 
 	_, err = io.Copy(w, bytes.NewReader(responseJson))
 	if err != nil {
+		//fmt.Println("bytes.NewReade")
 		Logger.Error("ServeHTTP failed", zap.Error(err))
 		w.WriteHeader(http.StatusInternalServerError)
 		return
