@@ -3,53 +3,15 @@ package main
 import (
 	"avia/goalexa"
 	"avia/goalexa/alexaapi"
-	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
-	"os"
 )
 
 // import 	"github.com/aivahealth/goalexa/alexaapi"
-
-/*
-utterance = tr = soyleyis ifade bicimi , ses cikarma  adIrIns speak
-slot = yuva , yarik, yerlestirmek sLat
-
-https://www.golangprograms.com/go-language/struct.html  https://kevin-yang.medium.com/golang-embedded-structs-b9d20aadea84
-https://www.golangprograms.com/go-language/interface.html -- lesson work ? -> Interface Accepting Address of the Variable == this example
-
-https://github.com/waringer/Alexa-Radio --bundan model skil falan olsuturma ornekleri al
-
-https://github.com/go-alexa/alexa/blob/master/events/events.go#L64
-
-https://github.com/jsgoecke/lambda-go  js json kodlar var
-
-https://github.com/ericdaugherty/alexa-skills-kit-golang/blob/master/alexa_test.go   test yazma ornegi
-https://github.com/nraboy/alexa-slick-dealer/blob/master/main_test.go bu da test
-
-https://github.com/go-alexa/alexa/tree/master  burada da test var
-
-https://github.com/go-alexa/alexa/blob/master/server/server_test.go   buradaki function icinde funtion teknigini mutlaka ogren
-
-go ile rouer yazmak https://benhoyt.com/writings/go-routing/ ve https://golangdocs.com/golang-mux-router  konu hakkinda iyisi
-
-
-//https://www.tutorialspoint.com/golang-program-that-uses-structs-as-map-keys
-
-
-//https://github.com/NerdCademyDev/golang  burada generic var
-//https://gosamples.dev/enum/ https://articles.wesionary.team/working-with-constants-and-iota-in-golang-460c64792d40  const ile auto inc
-
-
-test yazmak
-https://github.com/jakubsuchy/amazon-alexa-php
-
-go kucuk kodlamar ornegi
-*/
 
 func init() {
 	//To load our environmental variables.
@@ -61,23 +23,18 @@ func init() {
 type LaunchReq struct{}
 
 func main() {
-
 	skill := goalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa")
 	skill.RegisterHandlers(&LaunchReq{})
-
 	http.HandleFunc("/alexa/restaurant-bot", skill.ServeHTTP)
 	var port string = "9095"
 	fmt.Println("server running localhost:" + port)
-
 	http.ListenAndServe(":"+port, nil)
-
 }
 
 func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
 
 	requestType := requestRoot.Request.GetType()
 	fmt.Println(requestType)
-
 	var response alexaapi.ResponseRoot
 	response.Version = "7.0"
 	x := false
@@ -97,15 +54,11 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 	//fmt.Printf("MarshalIndent funnction only intent output\n %s\n", string(empJSON))
 
 	if requestType == "LaunchRequest" {
-
-		text := "Hi! Welcome to sesame Restaurant for selmantunc.com How can I help you today? amazon"
-
+		text := "Hi! Welcome to Diet Application"
 		var myOutputSpeech alexaapi.OutputSpeech
-
 		myOutputSpeech.Text = text
 		myOutputSpeech.Type = alexaapi.OutputSpeechTypeSSML
 		myOutputSpeech.SSML = "<speak>" + text + "</speak>"
-
 		response.Response.OutputSpeech = &myOutputSpeech
 
 		var myCard alexaapi.Card
@@ -113,42 +66,32 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		myCard.Content = text
 		myCard.Type = alexaapi.CardTypeStandard
 		response.Response.Card = &myCard
-
 		response.Response.Reprompt.OutputSpeech = &myOutputSpeech
-
 		response.Response.ShouldEndSession = &x
 	}
 
 	if requestType == "IntentRequest" {
-		//TODO remain works ... save data and helper function, look go alaexa skill project
-		requestJson := requestRoot.Request.GetRequestJson()
-		var requestIntent alexaapi.RequestIntentRequest
-		json.Unmarshal(requestJson, &requestIntent)
-		fmt.Println(requestIntent.Intent.Name)
-		intentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
-		fmt.Println(intentValue)
 
+		//requestJson := requestRoot.Request.GetRequestJson()
+		//var requestIntent alexaapi.RequestIntentRequest
+		//json.Unmarshal(requestJson, &requestIntent)
+		//numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
 		response.Response.Directives = nil
 		text := "Ok Save successful "
 		types := alexaapi.OutputSpeechTypePlainText
 
 		var myOutputSpeech alexaapi.OutputSpeech
-
 		myOutputSpeech.Text = text
 		myOutputSpeech.Type = types
-
 		response.Response.OutputSpeech = &myOutputSpeech
 
 		var myCard alexaapi.Card
 		myCard.Title = "test title"
-		myCard.Content = "bal content"
+		myCard.Content = "test context"
 		myCard.Type = alexaapi.CardTypeStandard
 		response.Response.Card = &myCard
-
 		response.Response.Reprompt.OutputSpeech = &myOutputSpeech
-
 		response.Response.ShouldEndSession = &x
-
 	}
 	return &response, nil
 }
@@ -156,19 +99,139 @@ func (h *LaunchReq) CanHandle(ctx context.Context, skill *goalexa.Skill, request
 	return true
 }
 
-func fileAdd(data []string) {
-	file, err := os.OpenFile("test.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+// OutputSpeech will replace any existing text that should be spoken with this new value. If the output
+// needs to be constructed in steps or special speech tags need to be used, see the `SSMLTextBuilder`.
+func (r *EchoResponse) OutputSpeech(text string) *EchoResponse {
+	r.Response.OutputSpeech = &EchoRespPayload{
+		Type: "PlainText",
+		Text: text,
+	}
 
+	return r
+}
+
+// Card will add a card to the Alexa app's response with the provided title and content strings.
+func (r *EchoResponse) Card(title string, content string) *EchoResponse {
+	return r.SimpleCard(title, content)
+}
+
+// OutputSpeechSSML will add the text string provided and indicate the speech type is SSML in the response.
+// This should only be used if the text to speech string includes special SSML tags.
+func (r *EchoResponse) OutputSpeechSSML(text string) *EchoResponse {
+	r.Response.OutputSpeech = &EchoRespPayload{
+		Type: "SSML",
+		SSML: text,
+	}
+
+	return r
+}
+
+// SimpleCard will indicate that a card should be included in the Alexa companion app as part of the response.
+// The card will be shown with the provided title and content.
+func (r *EchoResponse) SimpleCard(title string, content string) *EchoResponse {
+	r.Response.Card = &EchoRespPayload{
+		Type:    "Simple",
+		Title:   title,
+		Content: content,
+	}
+
+	return r
+}
+
+// StandardCard will indicate that a card should be shown in the Alexa companion app as part of the response.
+// The card shown will include the provided title and content as well as images loaded from the locations provided
+// as remote locations.
+func (r *EchoResponse) StandardCard(title string, content string, smallImg string, largeImg string) *EchoResponse {
+	r.Response.Card = &EchoRespPayload{
+		Type:    "Standard",
+		Title:   title,
+		Content: content,
+	}
+
+	if smallImg != "" {
+		r.Response.Card.Image.SmallImageURL = smallImg
+	}
+
+	if largeImg != "" {
+		r.Response.Card.Image.LargeImageURL = largeImg
+	}
+
+	return r
+}
+
+// LinkAccountCard is used to indicate that account linking still needs to be completed to continue
+// using the Alexa skill. This will force an account linking card to be shown in the user's companion app.
+func (r *EchoResponse) LinkAccountCard() *EchoResponse {
+	r.Response.Card = &EchoRespPayload{
+		Type: "LinkAccount",
+	}
+
+	return r
+}
+
+// Reprompt will send a prompt back to the user, this could be used to request additional information from the user.
+func (r *EchoResponse) Reprompt(text string) *EchoResponse {
+	r.Response.Reprompt = &EchoReprompt{
+		OutputSpeech: EchoRespPayload{
+			Type: "PlainText",
+			Text: text,
+		},
+	}
+
+	return r
+}
+
+// RepromptSSML is similar to the `Reprompt` method but should be used when the prompt
+// to the user should include special speech tags.
+func (r *EchoResponse) RepromptSSML(text string) *EchoResponse {
+	r.Response.Reprompt = &EchoReprompt{
+		OutputSpeech: EchoRespPayload{
+			Type: "SSML",
+			Text: text,
+		},
+	}
+
+	return r
+}
+
+// EndSession is a convenience method for setting the flag in the response that will
+// indicate if the session between the end user's device and the skillserver should be closed.
+func (r *EchoResponse) EndSession(flag bool) *EchoResponse {
+	r.Response.ShouldEndSession = flag
+
+	return r
+}
+
+// RespondToIntent is used to Delegate/Elicit/Confirm a dialog or an entire intent with
+// user of alexa. The func takes in name of the dialog, updated intent/intent to confirm
+// if any and optional slot value. It prepares a Echo Response to be returned.
+// Multiple directives can be returned by calling the method in chain
+// (eg. RespondToIntent(...).RespondToIntent(...), each RespondToIntent call appends the
+// data to Directives array and will return the same at the end.
+func (r *EchoResponse) RespondToIntent(name dialog.Type, intent *EchoIntent, slot *EchoSlot) *EchoResponse {
+	directive := EchoDirective{Type: name}
+	if intent != nil && name == dialog.ConfirmIntent {
+		directive.IntentToConfirm = intent.Name
+	} else {
+		directive.UpdatedIntent = intent
+	}
+
+	if slot != nil {
+		if name == dialog.ElicitSlot {
+			directive.SlotToElicit = slot.Name
+		} else if name == dialog.ConfirmSlot {
+			directive.SlotToConfirm = slot.Name
+		}
+	}
+	r.Response.Directives = append(r.Response.Directives, &directive)
+	return r
+}
+
+func (r *EchoResponse) String() ([]byte, error) {
+	jsonStr, err := json.Marshal(r)
 	if err != nil {
-		log.Fatalf("failed creating file: %s", err)
+		return nil, err
 	}
 
-	datawriter := bufio.NewWriter(file)
-
-	for _, data := range data {
-		_, _ = datawriter.WriteString(data + "\n")
-	}
-
-	datawriter.Flush()
-	file.Close()
+	return jsonStr, nil
 }
