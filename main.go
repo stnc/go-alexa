@@ -39,13 +39,12 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 
 	var response alexaapi.ResponseRoot
 	var builder goalexa.Builder
-	x := false
 
 	if requestType == "LaunchRequest" {
 		text := "Hi! Welcome to Diet Application"
 		title := "diet reminder"
 		reprompt := "Welcome Diet Application"
-		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt).EndSession(x)
+		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt).EndSession(false)
 
 	}
 	if requestType == "IntentRequest" {
@@ -53,13 +52,14 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		title := "diet reminder"
 		reprompt := "You may want to continue the conversation. I am still listening. How can I help you?"
 		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt)
-		// legacy path
-		requestJson := requestRoot.Request.GetRequestJson()
-		var requestIntent alexaapi.RequestIntentRequest
-		json.Unmarshal(requestJson, &requestIntent)
-		numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
-		fmt.Println(numberOfPeopleIntentValue)
-
+		// intent read == legacy way
+		//requestJson := requestRoot.Request.GetRequestJson()
+		//var requestIntent alexaapi.RequestIntentRequest
+		//json.Unmarshal(requestJson, &requestIntent)
+		//numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
+		//fmt.Println(numberOfPeopleIntentValue)
+		intent := goalexa.GetIntent(requestRoot, "RemindTime")
+		fmt.Println(intent)
 	}
 
 	responseJson, _ := json.Marshal(builder)

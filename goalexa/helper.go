@@ -2,6 +2,7 @@ package goalexa
 
 import (
 	"avia/goalexa/alexaapi"
+	"encoding/json"
 )
 
 type Builder alexaapi.ResponseRoot
@@ -82,10 +83,11 @@ func (build *Builder) LinkAccountCard() *Builder {
 // Reprompt will send a prompt back to the user, this could be used to request additional information from the user.
 func (build *Builder) Reprompt(text string) *Builder {
 	var myOutputSpeech alexaapi.OutputSpeech
+	var myReprompt alexaapi.Reprompt
+
 	myOutputSpeech.Text = text
 	myOutputSpeech.Type = alexaapi.OutputSpeechTypePlainText
 
-	var myReprompt alexaapi.Reprompt
 	myReprompt.OutputSpeech = &myOutputSpeech
 	build.Response.Reprompt = &myReprompt
 
@@ -109,14 +111,10 @@ func (build *Builder) EndSession(flag bool) *Builder {
 	return build
 }
 
-//
-//func increment(ptr *int) {
-//	*ptr = *ptr + 1
-//}
-//
-//func main() {
-//	val :=5
-//	increment(&val)
-//	fmt.Println("The incremented val is given below:")
-//	fmt.Println(val)
-//}
+// GetIntent to quickly reach the intent value from the response
+func GetIntent(requestRoot *alexaapi.RequestRoot, name string) string {
+	requestJson := requestRoot.Request.GetRequestJson()
+	var requestIntent alexaapi.RequestIntentRequest
+	json.Unmarshal(requestJson, &requestIntent)
+	return requestIntent.Intent.Slots[name].Value
+}
