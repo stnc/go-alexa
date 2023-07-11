@@ -51,7 +51,7 @@ go ile rouer yazmak https://benhoyt.com/writings/go-routing/ ve https://golangdo
 test yazmak
 https://github.com/jakubsuchy/amazon-alexa-php
 https://github.com/arienmalec/alexa-go/blob/master/request_test.go
-
+https://medium.com/@matryer/5-simple-tips-and-tricks-for-writing-unit-tests-in-golang-619653f90742#.mjytgulbg
 
 
 

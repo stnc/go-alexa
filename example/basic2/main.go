@@ -14,21 +14,19 @@ import (
 	"time"
 )
 
-// import 	"github.com/aivahealth/goalexa/alexaapi"
-
 func init() {
 	//To load our environmental variables.
 	if err := godotenv.Load(); err != nil {
-		log.Println("no env gotten")
+		fmt.Println("no env gotten")
 	}
 }
 
 type LaunchReq struct{}
 
 func main() {
-	skill := goalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa")
+	skill := goalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa25892900")
 	skill.RegisterHandlers(&LaunchReq{})
-	http.HandleFunc("/alexa/restaurant-bot", skill.ServeHTTP)
+	http.HandleFunc("/alexa", skill.ServeHTTP)
 	var port string = "9095"
 	fmt.Println("server running localhost:" + port)
 	http.ListenAndServe(":"+port, nil)
@@ -45,16 +43,6 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 	response.SessionAttributes = make(map[string]interface{})
 	response.SessionAttributes["read"] = true
 	response.SessionAttributes["category"] = true
-	// TODO: how does this code work
-	//requestJson := requestRoot.Request.GetRequestJson()
-
-	//requestIntent := map[string]any{}
-	//json.Unmarshal(requestJson, &requestIntent)
-	//empJSON, err := json.MarshalIndent(requestIntent, "", "  ")
-	//if err != nil {
-	//	log.Fatalf(err.Error())
-	//}
-	//fmt.Printf("MarshalIndent funnction only intent output\n %s\n", string(empJSON))
 
 	if requestType == "LaunchRequest" {
 		text := "Hi! Welcome to Diet Application"
@@ -69,7 +57,11 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		myCard.Content = text
 		myCard.Type = alexaapi.CardTypeStandard
 		response.Response.Card = &myCard
-		response.Response.Reprompt.OutputSpeech = &myOutputSpeech
+
+		var myReprompt alexaapi.Reprompt
+		myReprompt.OutputSpeech = &myOutputSpeech
+		response.Response.Reprompt = &myReprompt
+
 		response.Response.ShouldEndSession = &x
 	}
 
@@ -110,7 +102,11 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		myCard.Content = "test context"
 		myCard.Type = alexaapi.CardTypeStandard
 		response.Response.Card = &myCard
-		response.Response.Reprompt.OutputSpeech = &myOutputSpeech
+
+		var myReprompt alexaapi.Reprompt
+		myReprompt.OutputSpeech = &myOutputSpeech
+		response.Response.Reprompt = &myReprompt
+
 		response.Response.ShouldEndSession = &x
 	}
 	return &response, nil

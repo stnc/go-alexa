@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$USER_HOME$/Downloads/alexa-master/.idea/alexa-master.iml" filepath="$USER_HOME$/Downloads/alexa-master/.idea/alexa-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/../calculator/.idea/calculator.iml" filepath="$PROJECT_DIR$/../calculator/.idea/calculator.iml" />
+      <module fileurl="file://$USER_HOME$/Downloads/go-alexa-master/.idea/go-alexa-master.iml" filepath="$USER_HOME$/Downloads/go-alexa-master/.idea/go-alexa-master.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/gol-alexa.iml" filepath="$PROJECT_DIR$/.idea/gol-alexa.iml" />
     </modules>
   </component>
