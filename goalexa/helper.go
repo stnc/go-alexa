@@ -9,11 +9,10 @@ type Builder alexaapi.ResponseRoot
 // OutputSpeech will replace any existing text that should be spoken with this new value. If the output
 // needs to be constructed in steps or special speech tags need to be used, see the `SSMLTextBuilder`.
 func (build *Builder) OutputSpeech(text string) *Builder {
-	var sml string = EscapeSSMLText("<speak>" + text + "</speak>")
-	//myOutputSpeech := alexaapi.OutputSpeech{Text: "Alice", SSML: sml, Type: alexaapi.OutputSpeechTypeSSML}
-	//b.Response.OutputSpeech = &myOutputSpeech
-	//return &b.ResponseRoot
-
+	var sml string = "<speak>" + text + "</speak>"
+	//myOutputSpeech2 := alexaapi.OutputSpeech{Text: "Alice", SSML: sml, Type: alexaapi.OutputSpeechTypeSSML}
+	//build.Response.OutputSpeech = &myOutputSpeech2
+	//return build
 	var myOutputSpeech alexaapi.OutputSpeech
 	myOutputSpeech.Text = text
 	myOutputSpeech.Type = alexaapi.OutputSpeechTypeSSML
@@ -41,7 +40,8 @@ func (build *Builder) Card(title string, content string) *Builder {
 // OutputSpeechSSML will add the text string provided and indicate the speech type is SSML in the response.
 // This should only be used if the text to speech string includes special SSML tags.
 func (build *Builder) OutputSpeechSSML(text string) *Builder {
-	var sml string = EscapeSSMLText("<speak>" + text + "</speak>")
+	//var sml string = EscapeSSMLText("<speak>" + text + "</speak>")
+	var sml string = "<speak>" + text + "</speak>"
 	var myOutputSpeech alexaapi.OutputSpeech
 	myOutputSpeech.Type = alexaapi.OutputSpeechTypeSSML
 	myOutputSpeech.SSML = sml

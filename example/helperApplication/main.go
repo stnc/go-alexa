@@ -53,13 +53,12 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		title := "diet reminder"
 		reprompt := "You may want to continue the conversation. I am still listening. How can I help you?"
 		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt)
-		// legacy path
-		requestJson := requestRoot.Request.GetRequestJson()
-		var requestIntent alexaapi.RequestIntentRequest
-		json.Unmarshal(requestJson, &requestIntent)
-		numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
-		fmt.Println(numberOfPeopleIntentValue)
 
+		//requestJson := requestRoot.Request.GetRequestJson()
+		//var requestIntent alexaapi.RequestIntentRequest
+		//json.Unmarshal(requestJson, &requestIntent)
+		//numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
+		//fmt.Println(numberOfPeopleIntentValue)
 	}
 
 	responseJson, _ := json.Marshal(builder)
