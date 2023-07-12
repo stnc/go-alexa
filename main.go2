@@ -13,7 +13,6 @@ import (
 )
 
 // import 	"github.com/aivahealth/goalexa/alexaapi"
-//https://github.com/nraboy/alexa-slick-dealer/blob/master/main.go
 
 func init() {
 	//To load our environmental variables.
@@ -41,15 +40,15 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 	var builder goalexa.Builder
 
 	if requestType == "LaunchRequest" {
-		text := "Hi! Welcome to Diet Application"
+		text := "Hi! Welcome to Diet Reminder Application"
 		title := "diet reminder"
-		reprompt := "Welcome Diet Application"
+		reprompt := "Welcome Diet Reminder Application"
 		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt).EndSession(false)
-
 	}
+
 	if requestType == "IntentRequest" {
 		text := "Ok Save successful "
-		title := "diet reminder"
+		title := "Diet Reminder"
 		reprompt := "You may want to continue the conversation. I am still listening. How can I help you?"
 		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt)
 		// intent read == legacy way
@@ -63,7 +62,7 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 	}
 
 	responseJson, _ := json.Marshal(builder)
-	json.Unmarshal([]byte(responseJson), &response)
+	json.Unmarshal([]byte(responseJson), &response) // data hack
 	return &response, nil
 }
 func (h *LaunchNew) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {

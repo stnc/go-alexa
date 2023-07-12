@@ -5,8 +5,5 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module" module-name="alexa-master" />
-    <orderEntry type="module" module-name="calculator" />
-    <orderEntry type="module" module-name="go-alexa-master" />
   </component>
 </module>

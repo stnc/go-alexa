@@ -3,6 +3,9 @@
 package main
 
 import (
+	cms "avia/app/controller"
+	"avia/app/domain/entity"
+	repository "avia/app/domain/repository"
 	"avia/goalexa"
 	"avia/goalexa/alexaapi"
 	"context"
@@ -25,9 +28,22 @@ func init() {
 type LaunchNew struct{}
 
 func main() {
+
+	//
+	db := repository.DbConnect()
+	services, err := repository.RepositoriesInit(db)
+	if err != nil {
+		panic(err)
+	}
+	//defer services.Close()
+	services.Automigrate()
+
+	reminder := cms.InitReminderControl(services.Reminder)
+
 	skill := goalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa")
 	skill.RegisterHandlers(&LaunchNew{})
 	http.HandleFunc("/alexa", skill.ServeHTTP)
+	http.HandleFunc("/list", reminder.Index)
 	var port string = "9095"
 	fmt.Println("server running localhost:" + port)
 	http.ListenAndServe(":"+port, nil)
@@ -59,6 +75,16 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		//numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
 		//fmt.Println(numberOfPeopleIntentValue)
 		intent := goalexa.GetIntent(requestRoot, "RemindTime")
+
+		var reminder entity.Reminder
+		reminder.PersonName = "selman 4"
+		reminder.RemindDate = "2023-07-12"
+		reminder.RemindTime = "04:00"
+		reminder.NumberOfPeople = "4"
+		reminder.Email = "dsds@d.com"
+		reminder.Phone = "5354543543"
+		cms.SaveData(reminder)
+
 		fmt.Println(intent)
 	}
 
