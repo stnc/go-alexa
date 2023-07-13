@@ -1,0 +1,92 @@
+version: '3.5'
+services:
+  # docker-compose up -d --build
+  # docker da terminali ac
+  # cd /data/postgres
+  # echo "host all all all $POSTGRES_HOST_AUTH_METHOD" >> pg_hba.conf
+  #pgadmine girilecek hostname adi localhost degil -> postgres_container olacak
+
+  #redis
+  # apk update
+  # apk add nano
+  # redis-cli
+  # CONFIG SET requirepass MDNcVb924a
+
+  postgres:
+    container_name: postgres_container
+    image: postgres:14.1
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_INITDB_ARGS: '--encoding=UTF-8 --lc-collate=C --lc-ctype=C'
+      POSTGRES_HOST_AUTH_METHOD: "trust"
+      PGDATA: /data/postgres
+
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - backend
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-pgadmin4@pgadmin.org}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-admin}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+
+    volumes:
+      - pgadmin:/var/lib/pgadmin
+
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - backend
+    restart: unless-stopped
+
+  # # Redis Service
+  redis:
+    image: redis
+    restart: unless-stopped
+    container_name: redis
+    ports:
+      - "6379:6379"
+    command: redis-server --save 60 1 --requirepass MDNcVb924a --loglevel warning
+
+
+
+  redis-commander:
+    container_name: redis-commander
+    hostname: redis-commander
+    image: rediscommander/redis-commander:latest ## other linux and windows
+    image: arm64v8/redis:alpine #https://stackoverflow.com/questions/72957168/how-to-run-redis-docker-container-for-mac-silicon
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PASSWORD=MDNcVb924a
+    ports:
+      - "127.0.0.1:8081:8081"
+    depends_on:
+      - redis
+    restart:
+      unless-stopped
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
+    container_name: adminer
+    networks:
+      - backend
+
+networks:
+  backend:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
+  golang:
