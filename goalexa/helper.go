@@ -2,7 +2,7 @@ package goalexa
 
 import (
 	"encoding/json"
-	"github.com/stnc/goalexa/alexaapi"
+	"github.com/aivahealth/goalexa/alexaapi"
 )
 
 type Builder alexaapi.ResponseRoot

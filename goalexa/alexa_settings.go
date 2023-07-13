@@ -6,7 +6,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/stnc/goalexa/alexaapi"
+	"github.com/aivahealth/goalexa/alexaapi"
 	"go.uber.org/zap"
 )
 

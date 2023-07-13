@@ -19,8 +19,7 @@ var DB *gorm.DB
 // Repositories strcut
 type Repositories struct {
 	Reminder services.ReminderAppInterface
-
-	DB *gorm.DB
+	DB       *gorm.DB
 }
 
 // DbConnect initial

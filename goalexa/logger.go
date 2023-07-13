@@ -6,9 +6,8 @@ import (
 	"os"
 )
 
-var Logger *zap.Logger = fileLogger("logs.log")
-
-//var Logger *zap.Logger = zap.NewNop()
+// var Logger *zap.Logger = fileLogger("logs.log")
+var Logger *zap.Logger = zap.NewNop()
 
 func fileLogger(filename string) *zap.Logger {
 	config := zap.NewProductionEncoderConfig()

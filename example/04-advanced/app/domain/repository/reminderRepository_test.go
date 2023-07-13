@@ -2,7 +2,6 @@ package dbRepository
 
 // --------------not finished yet -------
 
-/*
 import (
 	"avia/app/domain/entity"
 	"testing"
@@ -167,4 +166,3 @@ func TestDeletePost_Success(t *testing.T) {
 
 	assert.Nil(t, deleteErr)
 }
-*/
