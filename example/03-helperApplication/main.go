@@ -4,9 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/aivahealth/goalexa"
-	"github.com/aivahealth/goalexa/alexaapi"
 	"github.com/joho/godotenv"
+	"github.com/stnc/goalexa"
+	"github.com/stnc/goalexa/alexaapi"
 	"net/http"
 )
 
@@ -48,7 +48,7 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt)
 
 		//intent read == legacy way
-		
+
 		requestJson := requestRoot.Request.GetRequestJson()
 		var requestIntent alexaapi.RequestIntentRequest
 		json.Unmarshal(requestJson, &requestIntent)

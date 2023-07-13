@@ -1,8 +1,8 @@
 package goalexa
 
 import (
-	"avia/goalexa/alexaapi"
 	"encoding/json"
+	"github.com/stnc/goalexa/alexaapi"
 )
 
 type Builder alexaapi.ResponseRoot

@@ -1,17 +1,15 @@
-////////////// selman
-
 package main
 
 import (
 	cms "avia/app/controller"
 	"avia/app/domain/entity"
 	repository "avia/app/domain/repository"
-	"avia/goalexa"
-	"avia/goalexa/alexaapi"
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
+	"github.com/stnc/goalexa"
+	"github.com/stnc/goalexa/alexaapi"
 	"net/http"
 )
 

@@ -3,9 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"github.com/aivahealth/goalexa"
-	"github.com/aivahealth/goalexa/alexaapi"
 	"github.com/joho/godotenv"
+	"github.com/stnc/goalexa"
+	"github.com/stnc/goalexa/alexaapi"
 	"net/http"
 )
 

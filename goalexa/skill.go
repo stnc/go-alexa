@@ -5,13 +5,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/stnc/goalexa/alexaapi"
+	"go.uber.org/zap"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
-
-	"avia/goalexa/alexaapi"
-	"go.uber.org/zap"
 )
 
 type RequestHandler interface {
