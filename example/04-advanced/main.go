@@ -3,6 +3,9 @@
 package main
 
 import (
+	cms "avia/app/controller"
+	"avia/app/domain/entity"
+	repository "avia/app/domain/repository"
 	"avia/goalexa"
 	"avia/goalexa/alexaapi"
 	"context"
@@ -11,8 +14,6 @@ import (
 	"github.com/joho/godotenv"
 	"net/http"
 )
-
-// import 	"github.com/aivahealth/goalexa/alexaapi"
 
 func init() {
 	//To load our environmental variables.
@@ -24,9 +25,20 @@ func init() {
 type LaunchNew struct{}
 
 func main() {
+	db := repository.DbConnect()
+	services, err := repository.RepositoriesInit(db)
+	if err != nil {
+		panic(err)
+	}
+	//defer services.Close()
+	services.Automigrate()
+
+	reminder := cms.InitReminderControl(services.Reminder)
+
 	skill := goalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa")
 	skill.RegisterHandlers(&LaunchNew{})
 	http.HandleFunc("/alexa", skill.ServeHTTP)
+	http.HandleFunc("/list", reminder.Index)
 	var port string = "9095"
 	fmt.Println("server running localhost:" + port)
 	http.ListenAndServe(":"+port, nil)
@@ -40,29 +52,33 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 	var builder goalexa.Builder
 
 	if requestType == "LaunchRequest" {
-		text := "Hi! Welcome to Diet Reminder Application"
+		text := "Hi! Welcome to Diet Application"
 		title := "diet reminder"
-		reprompt := "Welcome Diet Reminder Application"
+		reprompt := "Welcome Diet Application"
 		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt).EndSession(false)
-	}
 
+	}
 	if requestType == "IntentRequest" {
 		text := "Ok Save successful "
 		title := "Diet Reminder"
 		reprompt := "You may want to continue the conversation. I am still listening. How can I help you?"
 		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt)
-		// intent read == legacy way
-		//requestJson := requestRoot.Request.GetRequestJson()
-		//var requestIntent alexaapi.RequestIntentRequest
-		//json.Unmarshal(requestJson, &requestIntent)
-		//numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
-		//fmt.Println(numberOfPeopleIntentValue)
-		intent := goalexa.GetIntent(requestRoot, "RemindTime")
-		fmt.Println(intent)
+		personName := goalexa.GetIntent(requestRoot, "PersonName")
+		remindDate := goalexa.GetIntent(requestRoot, "RemindDate")
+		remindTime := goalexa.GetIntent(requestRoot, "RemindTime")
+		numberOfPeople := goalexa.GetIntent(requestRoot, "NumberOfPeople")
+
+		var reminder entity.Reminder
+		reminder.PersonName = personName
+		reminder.RemindDate = remindDate
+		reminder.RemindTime = remindTime
+		reminder.NumberOfPeople = numberOfPeople
+		cms.SaveData(reminder)
+
 	}
 
 	responseJson, _ := json.Marshal(builder)
-	json.Unmarshal([]byte(responseJson), &response) // data hack
+	json.Unmarshal([]byte(responseJson), &response)
 	return &response, nil
 }
 func (h *LaunchNew) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {

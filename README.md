@@ -53,7 +53,7 @@ https://github.com/jakubsuchy/amazon-alexa-php
 https://github.com/arienmalec/alexa-go/blob/master/request_test.go
 https://medium.com/@matryer/5-simple-tips-and-tricks-for-writing-unit-tests-in-golang-619653f90742#.mjytgulbg
 //https://github.com/nraboy/alexa-slick-dealer/blob/master/main.go
-
+https://gitlab.com/go-box/pongo2gin/-/blob/master/v4/render_test.go
 
 
 go kucuk kodlamar ornegi
@@ -66,3 +66,5 @@ https://github.com/mikeflynn/go-alexa/tree/master  most stars
 for devices
 https://github.com/webability-go/alexa
 
+// import 	"github.com/aivahealth/goalexa/alexaapi"
+//https://github.com/nraboy/alexa-slick-dealer/blob/master/main.go# goalexa

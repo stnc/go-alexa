@@ -1,10 +1,10 @@
 package main
 
 import (
-	"avia/goalexa"
-	"avia/goalexa/alexaapi"
 	"context"
 	"fmt"
+	"github.com/aivahealth/goalexa"
+	"github.com/aivahealth/goalexa/alexaapi"
 	"github.com/joho/godotenv"
 	"net/http"
 )

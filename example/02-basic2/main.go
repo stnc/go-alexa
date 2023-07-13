@@ -1,12 +1,12 @@
 package main
 
 import (
-	"avia/goalexa"
-	"avia/goalexa/alexaapi"
 	"bufio"
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/aivahealth/goalexa"
+	"github.com/aivahealth/goalexa/alexaapi"
 	"github.com/joho/godotenv"
 	"log"
 	"net/http"
@@ -116,12 +116,10 @@ func (h *LaunchReq) CanHandle(ctx context.Context, skill *goalexa.Skill, request
 }
 
 func dataAdd(data []string) {
-	file, err := os.OpenFile("test.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-
+	file, err := os.OpenFile("data.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
 		log.Fatalf("failed creating file: %s", err)
 	}
-
 	datawriter := bufio.NewWriter(file)
 
 	for _, data := range data {

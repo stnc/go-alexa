@@ -1,19 +1,14 @@
-////////////// selman
-
 package main
 
 import (
-	"avia/goalexa"
-	"avia/goalexa/alexaapi"
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/aivahealth/goalexa"
+	"github.com/aivahealth/goalexa/alexaapi"
 	"github.com/joho/godotenv"
 	"net/http"
 )
-
-// import 	"github.com/aivahealth/goalexa/alexaapi"
-//https://github.com/nraboy/alexa-slick-dealer/blob/master/main.go
 
 func init() {
 	//To load our environmental variables.
@@ -45,19 +40,20 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		title := "diet reminder"
 		reprompt := "Welcome Diet Application"
 		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt).EndSession(false)
-
 	}
 	if requestType == "IntentRequest" {
 		text := "Ok Save successful "
-		title := "diet reminder"
+		title := "Diet Reminder"
 		reprompt := "You may want to continue the conversation. I am still listening. How can I help you?"
 		builder.OutputSpeech(text).Card(title, text).Reprompt(reprompt)
-		// intent read == legacy way
-		//requestJson := requestRoot.Request.GetRequestJson()
-		//var requestIntent alexaapi.RequestIntentRequest
-		//json.Unmarshal(requestJson, &requestIntent)
-		//numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
-		//fmt.Println(numberOfPeopleIntentValue)
+
+		//intent read == legacy way
+		
+		requestJson := requestRoot.Request.GetRequestJson()
+		var requestIntent alexaapi.RequestIntentRequest
+		json.Unmarshal(requestJson, &requestIntent)
+		numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
+		fmt.Println(numberOfPeopleIntentValue)
 		intent := goalexa.GetIntent(requestRoot, "RemindTime")
 		fmt.Println(intent)
 	}
