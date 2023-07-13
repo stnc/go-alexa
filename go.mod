@@ -1,4 +1,4 @@
-module github.com/aivahealth/goalexa
+module github.com/my-go-alexa/goalexa
 
 go 1.18
 
