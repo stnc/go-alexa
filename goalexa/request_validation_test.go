@@ -1,7 +1,6 @@
 package goalexa
 
 import (
-	"io"
 	"os"
 	"testing"
 )
@@ -57,44 +56,30 @@ func Test_validateAlexaRequest(t *testing.T) {
 	//    }
 	//}`)
 	//
-
 	jsonData, err := os.ReadFile("../mocks/requestEnvelope.json")
 	if err != nil {
 		panic(err)
 	}
-
 	jsonDataStr := string(jsonData)
 	payload := strings.NewReader(jsonDataStr)
-
-	url := "http://localhost:9095/alexa"
-
+	url := "http://localhost:9095/alexaTest"
 	req, err := http.NewRequest(http.MethodPost, url, payload)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
-	validSignature := `jsHzkhi2zPaFXV4gnHN4foePDtv4SqmreEDqKqJc8kUX7skhOlZ03uKYeqLOHAot98tVJc9pMdi1TRMnkQ8sr/GoReO++yGi3iAYjO8/XXL1oscx1vMUzmOLmvCO/EfF3/iEpNOb3BIJEiNhT2ZIwp7EisQi3eYLDmDaklSmPWWGVQRtcSq1EoHarMW9GrUaApu2cJdAjnF1aF3yFoLiHheN4DSW0qQ14N+ndba4C+YQBn4Ds2SXCFUyEC+q/H4A7SFioAE/qR3WYIMMfKuk1iEQOQY7jAFCS8zOjCaa4sM373T4mNUAojcgdAaHxzu2smLRzQSttTXfuemCijTigg==`
-
+	validSignature := `jsHzkhi2zPaFXV4gnHN4foePDtv4SqmreEDqKqJc8kUX7skhOlZ03uKYeqLOHAot98tVJc9pMdi1TRMnkQ8sr/GoR
+eO++yGi3iAYjO8/XXL1oscx1vMUzmOLmvCO/EfF3/iEpNOb3BIJEiNhT2ZIwp7EisQi3eYLDmDaklSmPWWGVQRtcSq1EoHarMW9GrUaApu2cJdAjn
+F1aF3yFoLiHheN4DSW0qQ14N+ndba4C+YQBn4Ds2SXCFUyEC+q/H4A7SFioAE/qR3WYIMMfKuk1iEQOQY7jAFCS8zOjCaa4sM373T4mNUAojcgdA
+aHxzu2smLRzQSttTXfuemCijTigg==`
 	req.Header.Add("signaturecertchainurl", "https://s3.amazonaws.com/echo.api/echo-api-cert-7.pem")
 	req.Header.Add("signature", validSignature)
-
 	w := httptest.NewRecorder()
-	StncValidateAlexaRequest(w, req)
-	res := w.Result()
-	defer res.Body.Close()
-	data, err := io.ReadAll(res.Body)
-	if err != nil {
-		t.Errorf("expected error to be nil got %v", err)
-	}
-	if string(data) != "VALID" {
-		t.Errorf("expected VALID got %v", string(data))
-	}
+	errValidate := validateAlexaRequest(w, req)
 
-	//if err := validateAlexaRequest(w, req); err != nil {
-	//	fmt.Println(err)
-	//	w.WriteHeader(http.StatusBadRequest)
-	//	return
-	//}
+	if errValidate != nil {
+		t.Errorf("expected error to be nil got %v", errValidate)
+	}
 
 }
 func Test_verifyCertURL(t *testing.T) {

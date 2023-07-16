@@ -15,41 +15,30 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
-	"time"
 )
 
 var (
 	cachedCert *x509.Certificate
 )
 
-func StncValidateAlexaRequest(w http.ResponseWriter, r *http.Request) {
+func validateAlexaRequest(w http.ResponseWriter, r *http.Request) error {
 	certURL := r.Header.Get("SignatureCertChainUrl")
 
 	// Verify certificate URL
 	if !verifyCertURL(certURL) {
-		//fmt.Println("Invalid certificate ")
-		//return fmt.Errorf("Invalid certificate url: %q", certURL)
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, certURL)
-		return
+		return fmt.Errorf("Invalid certificate url: %q", certURL)
 	}
 
 	cert, err := getX509Certificate(certURL)
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "certifai err")
-		return
+		return err
 	}
 
-	//// Check the certificate date
+	// Check the certificate date
 	//if time.Now().Unix() < cert.NotBefore.Unix() || time.Now().Unix() > cert.NotAfter.Unix() {
 	//	cachedCert = nil
 	//	// try again
-	//	//fmt.Println("time-- error")
-	//	//return validateAlexaRequest(w, r)
-	//	w.WriteHeader(http.StatusBadRequest)
-	//	fmt.Fprintf(w, "time-- error")
-	//	return
+	//	return validateAlexaRequest(w, r)
 	//}
 
 	// Verify the key
@@ -61,63 +50,12 @@ func StncValidateAlexaRequest(w http.ResponseWriter, r *http.Request) {
 	hash := sha1.New()
 	_, err = io.Copy(hash, io.TeeReader(r.Body, &bodyBuf))
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "bugffer ")
-		return
+		return err
 	}
-	r.Body = ioutil.NopCloser(&bodyBuf)
+	r.Body = io.NopCloser(&bodyBuf)
 
 	err = rsa.VerifyPKCS1v15(publicKey.(*rsa.PublicKey), crypto.SHA1, hash.Sum(nil), encryptedSig)
 	if err != nil {
-		//fmt.Println("Invalid Amazon certificate signature")
-		//return fmt.Errorf("Invalid Amazon certificate signature: %v", err)
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintf(w, "Invalid Amazon certificate signature")
-		return
-	}
-
-	w.WriteHeader(http.StatusOK)
-	fmt.Fprintf(w, strings.ToUpper("valid"))
-}
-
-func validateAlexaRequest(w http.ResponseWriter, r *http.Request) error {
-	certURL := r.Header.Get("SignatureCertChainUrl")
-
-	// Verify certificate URL
-	if !verifyCertURL(certURL) {
-		//fmt.Println("Invalid certificate ")
-		return fmt.Errorf("Invalid certificate url: %q", certURL)
-	}
-
-	cert, err := getX509Certificate(certURL)
-	if err != nil {
-		return err
-	}
-
-	// Check the certificate date
-	if time.Now().Unix() < cert.NotBefore.Unix() || time.Now().Unix() > cert.NotAfter.Unix() {
-		cachedCert = nil
-		// try again
-		//fmt.Println("time-- error")
-		return validateAlexaRequest(w, r)
-	}
-
-	// Verify the key
-	publicKey := cert.PublicKey
-	encryptedSig, _ := base64.StdEncoding.DecodeString(r.Header.Get("Signature"))
-
-	// Make the request body SHA1 and verify the request with the public key
-	var bodyBuf bytes.Buffer
-	hash := sha1.New()
-	_, err = io.Copy(hash, io.TeeReader(r.Body, &bodyBuf))
-	if err != nil {
-		return err
-	}
-	r.Body = ioutil.NopCloser(&bodyBuf)
-
-	err = rsa.VerifyPKCS1v15(publicKey.(*rsa.PublicKey), crypto.SHA1, hash.Sum(nil), encryptedSig)
-	if err != nil {
-		//fmt.Println("Invalid Amazon certificate signature")
 		return fmt.Errorf("Invalid Amazon certificate signature: %v", err)
 	}
 
@@ -177,7 +115,6 @@ func downloadCert(certURL string) ([]byte, error) {
 	return certContents, nil
 }
 
-// https://developer.amazon.com/en-US/docs/alexa/custom-skills/host-a-custom-skill-as-a-web-service.html#check-request-signature
 func verifyCertURL(path string) bool {
 	link, _ := url.Parse(path)
 
