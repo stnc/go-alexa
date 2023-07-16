@@ -51,7 +51,7 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		var myCard alexaapi.Card
 		myCard.Title = "diet reminder "
 		myCard.Content = text
-		myCard.Type = alexaapi.CardTypeStandard
+		myCard.Type = alexaapi.CardTypeSimple
 		response.Response.Card = &myCard
 
 		var myReprompt alexaapi.Reprompt

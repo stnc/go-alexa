@@ -22,6 +22,12 @@ intent = niyet - amac gayet intent
 utterance = tr = soyleyis ifade bicimi , ses cikarma  adIrIns speak
 slot = yuva , yarik, yerlestirmek sLat
 
+go test . -v   
+go test . -coverprofile=cover.out    
+go tool cover -func=cover.out    
+go tool cover -html=cover.out
+
+
 https://www.golangprograms.com/go-language/struct.html  https://kevin-yang.medium.com/golang-embedded-structs-b9d20aadea84
 https://www.golangprograms.com/go-language/interface.html -- lesson work ? -> Interface Accepting Address of the Variable == this example
 
@@ -98,4 +104,5 @@ https://github.com/skillkit/go-alexa
 https://github.com/stnc/chi v1
 https://github.com/aivahealth/goalexa/blob/master/attributes.go  bunun icin generic ogrenmek lazim yapilacak
 https://webflow.com/pricing  hazir site yapan arac 
-https://github.com/bxcodec/go-clean-arch/tree/master  benim projemi bunun gibi parcalara ayirabilirim VERRRYYYYYYYY IMPORTANT 
+https://github.com/bxcodec/go-clean-arch/tree/master  benim projemi bunun gibi parcalara ayirabilirim VERRRYYYYYYYY IMPORTANT
+https://github.com/patst/alexa-skills-kit-for-go/blob/master/alexa/http_test.go#L87  bunun uzerinde calis cok onemli cok cok VERRRYYYYYYYY IMPORTANT

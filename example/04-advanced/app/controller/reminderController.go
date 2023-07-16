@@ -23,28 +23,9 @@ func InitReminderControl(KiApp services.ReminderAppInterface) *ReminderControl {
 
 // Index list
 func (access *ReminderControl) Index(w http.ResponseWriter, req *http.Request) {
-	//var reminder entity.Reminder
-	//reminder.PersonName = "selman 4"
-	//reminder.RemindDate = "2023-07-12"
-	//reminder.RemindTime = "04:00"
-	//reminder.NumberOfPeople = "4"
-	//reminder.Email = "dsds@d.com"
-	//reminder.Phone = "5354543543"
-	//SaveData(reminder)
 	var total int64
 	access.ReminderControlApp.Count(&total)
 	list, _ := access.ReminderControlApp.GetAll()
-	//
-	//var Reminder entity.Reminder
-	//Reminder.PersonName = "selman"
-	//Reminder.RemindDate = "2023-07-12"
-	//Reminder.RemindTime = "04:00"
-	//Reminder.NumberOfPeople = "4"
-	//Reminder.Email = "dsds@d.com"
-	//Reminder.Phone = "5354543543"
-	//
-	//access.ReminderControlApp.Save(&Reminder)
-
 	tpl, err := pongo2.FromFile("app/view/index.html")
 	if err != nil {
 		log.Fatal(err)

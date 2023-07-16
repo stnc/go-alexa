@@ -1,4 +1,4 @@
-module github.com/stnc/goalexa
+module avia
 
 go 1.18
 
