@@ -22,7 +22,7 @@ var (
 	cachedCert *x509.Certificate
 )
 
-func ValidateAlexaRequest(w http.ResponseWriter, r *http.Request) {
+func StncValidateAlexaRequest(w http.ResponseWriter, r *http.Request) {
 	certURL := r.Header.Get("SignatureCertChainUrl")
 
 	// Verify certificate URL

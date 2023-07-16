@@ -79,7 +79,7 @@ func Test_validateAlexaRequest(t *testing.T) {
 	req.Header.Add("signature", validSignature)
 
 	w := httptest.NewRecorder()
-	ValidateAlexaRequest(w, req)
+	StncValidateAlexaRequest(w, req)
 	res := w.Result()
 	defer res.Body.Close()
 	data, err := io.ReadAll(res.Body)
