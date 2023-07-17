@@ -61,16 +61,13 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		var myReprompt alexaapi.Reprompt
 		myReprompt.OutputSpeech = &myOutputSpeech
 		response.Response.Reprompt = &myReprompt
-
 		response.Response.ShouldEndSession = &x
 	}
 
 	if requestType == "IntentRequest" {
-
 		requestJson := requestRoot.Request.GetRequestJson()
 		var requestIntent alexaapi.RequestIntentRequest
 		json.Unmarshal(requestJson, &requestIntent)
-
 		numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
 		reservationDateIntentValue := requestIntent.Intent.Slots["RemindDate"].Value
 		reservationTimeIntentValue := requestIntent.Intent.Slots["RemindTime"].Value
@@ -87,7 +84,6 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 			"                                                                 ",
 		}
 		dataAdd(data)
-
 		response.Response.Directives = nil
 		text := "Ok Save successful "
 		types := alexaapi.OutputSpeechTypePlainText
@@ -96,7 +92,6 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 		myOutputSpeech.Text = text
 		myOutputSpeech.Type = types
 		response.Response.OutputSpeech = &myOutputSpeech
-
 		var myCard alexaapi.Card
 		myCard.Title = "test title"
 		myCard.Content = "test context"
@@ -121,11 +116,9 @@ func dataAdd(data []string) {
 		log.Fatalf("failed creating file: %s", err)
 	}
 	datawriter := bufio.NewWriter(file)
-
 	for _, data := range data {
 		_, _ = datawriter.WriteString(data + "\n")
 	}
-
 	datawriter.Flush()
 	file.Close()
 }

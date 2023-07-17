@@ -1,3 +1,5 @@
+github.com/Northern-Lights/going v0.0.0-20170910000221-0b6a14bc0e60 h1:IHrXPTiVFkEITz9+bhVO2wlvqvTqkwsPZg7bMEpDJmw=
+github.com/Northern-Lights/going v0.0.0-20170910000221-0b6a14bc0e60/go.mod h1:04M8d9O6cpYKxKiANbpgktTUKk4Z6+fa+3ud8tasK+c=
 github.com/aivahealth/goalexa v0.0.0-20230516173100-53ea91783d36 h1:CnKVZjWkJ7LI+Ozo55/G4/TAnJD9/+5LfM1A1ygMYpw=
 github.com/aivahealth/goalexa v0.0.0-20230516173100-53ea91783d36/go.mod h1:iqyK0dYy53p21aTNiG3GvEqKHxp+GxCDe1wMe8csW/0=
 github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=

@@ -27,8 +27,27 @@ var (
 	cachedCert *x509.Certificate
 )
 
-func main() {
+func EscapeSSMLText(text string) string {
+	text = strings.ReplaceAll(text, "&", "&amp;")
+	text = strings.ReplaceAll(text, "\"", "&quot;")
+	text = strings.ReplaceAll(text, "'", "&apos;")
+	text = strings.ReplaceAll(text, "<", "&lt;")
+	text = strings.ReplaceAll(text, ">", "&gt;")
+	return text
+}
 
+func main() {
+	text1 := `<speak> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+             labor et dolore magna aliqua. In ante metus dictum at. Scelerisque purus semper
+             eget duis at tellus at urna condimentum.<speak> `
+
+	text2 := "Lore\"m ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+	text3 := "Lorem 'ipsum' dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt"
+
+	fmt.Println(EscapeSSMLText(text1))
+	fmt.Println(EscapeSSMLText(text2))
+	fmt.Println(EscapeSSMLText(text3))
+	return
 	// cert, _ := getX509Certificate("https://s3.amazonaws.com/echo.api/echo-api-cert-7.pem")
 	// publicKey := cert.PublicKey
 
@@ -90,6 +109,7 @@ func ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		//return validateAlexaRequest(w, r)
 	}
 
+	//openssl dgst -sha1 -sign echo-api-cert-7.pem -out filename.sha1 p.txt
 	// Verify the key
 	publicKey := cert.PublicKey
 	encryptedSig, _ := base64.StdEncoding.DecodeString(r.Header.Get("Signature"))

@@ -1,0 +1,299 @@
+{
+  "interactionModel": {
+    "languageModel": {
+      "invocationName": "dummy restaurant",
+      "intents": [
+        {
+          "name": "AMAZON.CancelIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.HelpIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.StopIntent",
+          "samples": []
+        },
+        {
+          "name": "HelloWorldIntent",
+          "slots": [],
+          "samples": [
+            "hello",
+            "how are you",
+            "say hi world",
+            "say hi",
+            "hi",
+            "say hello world",
+            "say hello"
+          ]
+        },
+        {
+          "name": "AMAZON.NavigateHomeIntent",
+          "samples": []
+        },
+        {
+          "name": "AMAZON.FallbackIntent",
+          "samples": []
+        },
+        {
+          "name": "MakeReservation",
+          "slots": [
+            {
+              "name": "ReservationDate",
+              "type": "AMAZON.DATE",
+              "samples": [
+                "make reservation on  {ReservationDate} ",
+                "on {ReservationDate} is"
+              ]
+            },
+            {
+              "name": "NumberOfPeople",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "{NumberOfPeople} people",
+                "reservation for {NumberOfPeople} person",
+                "there will be {NumberOfPeople} people"
+              ]
+            },
+            {
+              "name": "ReservationTime",
+              "type": "AMAZON.TIME",
+              "samples": [
+                "at {ReservationTime}",
+                "i want to book at {ReservationTime}"
+              ]
+            },
+            {
+              "name": "PersonName",
+              "type": "AMAZON.FirstName",
+              "samples": [
+                "{PersonName}"
+              ]
+            },
+            {
+              "name": "RestaurantLocation",
+              "type": "RestLocationCity",
+              "samples": [
+                "location {RestaurantLocation}",
+                "city {RestaurantLocation}"
+              ]
+            }
+          ],
+          "samples": [
+            "i want to make reservation for {NumberOfPeople} on {ReservationDate} at {ReservationTime} for name {PersonName}",
+            "i want to make reservation on {ReservationDate} at {ReservationTime} for {NumberOfPeople} ",
+            "i want to make reservation for {NumberOfPeople} people",
+            "i want to make reservation"
+          ]
+        },
+        {
+          "name": "CancelReservation",
+          "slots": [
+            {
+              "name": "ReservationNumber",
+              "type": "AMAZON.NUMBER",
+              "samples": [
+                "reservation number {ReservationNumber}",
+                "{ReservationNumber}"
+              ]
+            }
+          ],
+          "samples": [
+            "i want to a cancel reservation {ReservationNumber} ",
+            "i want to a cancel reservation "
+          ]
+        }
+      ],
+      "types": [
+        {
+          "name": "RestLocationCity",
+          "values": [
+            {
+              "name": {
+                "value": "Bangalore"
+              }
+            },
+            {
+              "name": {
+                "value": "delhi"
+              }
+            },
+            {
+              "name": {
+                "value": "Mumbai",
+                "synonyms": [
+                  "bombay"
+                ]
+              }
+            },
+            {
+              "name": {
+                "value": "Kolkata",
+                "synonyms": [
+                  "culcutta"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    "dialog": {
+      "intents": [
+        {
+          "name": "MakeReservation",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "ReservationDate",
+              "type": "AMAZON.DATE",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1522305734164.699413466631"
+              }
+            },
+            {
+              "name": "NumberOfPeople",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1522305734164.775729794010"
+              }
+            },
+            {
+              "name": "ReservationTime",
+              "type": "AMAZON.TIME",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1522305734164.1180960313629"
+              }
+            },
+            {
+              "name": "PersonName",
+              "type": "AMAZON.FirstName",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1522305734164.1465102874619"
+              }
+            },
+            {
+              "name": "RestaurantLocation",
+              "type": "RestLocationCity",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.1522305734164.1333229248731"
+              },
+              "validations": [
+                {
+                  "type": "hasEntityResolutionMatch",
+                  "prompt": "Slot.Validation.1522305734164.1333229248731.520282493896"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "CancelReservation",
+          "confirmationRequired": false,
+          "prompts": {},
+          "slots": [
+            {
+              "name": "ReservationNumber",
+              "type": "AMAZON.NUMBER",
+              "confirmationRequired": false,
+              "elicitationRequired": true,
+              "prompts": {
+                "elicitation": "Elicit.Slot.392552188702.854488594750"
+              }
+            }
+          ]
+        }
+      ],
+      "delegationStrategy": "ALWAYS"
+    },
+    "prompts": [
+      {
+        "id": "Elicit.Slot.1522305734164.775729794010",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "How many person?"
+          },
+          {
+            "type": "PlainText",
+            "value": "How many people will be there?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1522305734164.699413466631",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "what is the reservation date?"
+          },
+          {
+            "type": "PlainText",
+            "value": "which date?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1522305734164.1180960313629",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "what time do you want to book?"
+          },
+          {
+            "type": "PlainText",
+            "value": "what time"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1522305734164.1465102874619",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "on which name do you want to make the reservation?"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.1522305734164.1333229248731",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "for which location city?"
+          }
+        ]
+      },
+      {
+        "id": "Slot.Validation.1522305734164.1333229248731.520282493896",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "Im sorry, we not have any branch at {RestaurantLocation} choice delphi,mumbai,kolkata,bangolare"
+          }
+        ]
+      },
+      {
+        "id": "Elicit.Slot.392552188702.854488594750",
+        "variations": [
+          {
+            "type": "PlainText",
+            "value": "what is the reservation number?"
+          }
+        ]
+      }
+    ]
+  }
+}

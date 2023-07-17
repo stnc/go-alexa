@@ -8,7 +8,6 @@ import (
 	"github.com/aivahealth/goalexa/alexaapi"
 	"go.uber.org/zap"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"os"
 )
@@ -56,15 +55,15 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := r.Context()
 
 	w.Header().Set("Content-Type", "application/json")
-	//if os.Getenv("APP_ENV") == "production" {
-	//	if err := validateAlexaRequest(w, r); err != nil {
-	//		fmt.Println(err)
-	//		w.WriteHeader(http.StatusBadRequest)
-	//		return
-	//	}
-	//}
+	if os.Getenv("APP_ENV") == "production" {
+		if err := validateAlexaRequest(w, r); err != nil {
+			fmt.Println(err)
+			w.WriteHeader(http.StatusBadRequest)
+			return
+		}
+	}
 
-	requestJson, err := ioutil.ReadAll(r.Body)
+	requestJson, err := io.ReadAll(r.Body)
 
 	if err != nil {
 		Logger.Error("ServeHTTP failed", zap.Error(err))

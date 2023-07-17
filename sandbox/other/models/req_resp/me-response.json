@@ -1,0 +1,26 @@
+{
+  "version": "1",
+  "sessionAttributes": {
+    "category": true,
+    "read": true
+  },
+  "response": {
+    "outputSpeech": {
+      "type": "PlainText",
+      "text": "Hi man How are you "
+    },
+    "card": {
+      "type": "Simple",
+      "title": "deneme",
+      "content": "Hi man How are you ",
+      "image": {}
+    },
+    "reprompt": {
+      "outputSpeech": {
+        "type": "PlainText",
+        "text": "Hi man How are you "
+      }
+    },
+    "shouldEndSession": false
+  }
+}

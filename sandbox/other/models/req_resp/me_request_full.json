@@ -1,0 +1,151 @@
+{
+  "version": "1.0",
+  "session": {
+    "new": false,
+    "sessionId": "amzn1.echo-api.session.bcacba71-7b61-423a-b742-f1af595a9532",
+    "application": {
+      "applicationId": "amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763"
+    },
+    "attributes": {
+      "read": true,
+      "category": true
+    },
+    "user": {
+      "userId": "amzn1.ask.account.AMASNF3KSDMAQSKOF7U4UGDKWHFGWCTU562KUYGJZEI55LHUIZ44QZI3CFTJHNFVQGJTXLQ735FLVXU7UML4O5MJCED4AKG7XGNIVNQTV4V3GDTC6W2RAMYKZNSZ6TCGJNEM7ZNRFIRXNWAPYCJIK6UQVP4LQCT4JZAC4VZGLNGKX3WF2IVDMCOXT2XCKQOAF42X7IAHZWHTQ7TJ5HDFYR37OXMQXMWOKVW3JAHD7BXA"
+    }
+  },
+  "context": {
+    "Viewports": [
+      {
+        "type": "APL",
+        "id": "main",
+        "shape": "RECTANGLE",
+        "dpi": 213,
+        "presentationType": "STANDARD",
+        "canRotate": false,
+        "configuration": {
+          "current": {
+            "mode": "HUB",
+            "video": {
+              "codecs": [
+                "H_264_42",
+                "H_264_41"
+              ]
+            },
+            "size": {
+              "type": "DISCRETE",
+              "pixelWidth": 1280,
+              "pixelHeight": 800
+            }
+          }
+        }
+      }
+    ],
+    "Viewport": {
+      "experiences": [
+        {
+          "arcMinuteWidth": 346,
+          "arcMinuteHeight": 216,
+          "canRotate": false,
+          "canResize": false
+        }
+      ],
+      "mode": "HUB",
+      "shape": "RECTANGLE",
+      "pixelWidth": 1280,
+      "pixelHeight": 800,
+      "dpi": 213,
+      "currentPixelWidth": 1280,
+      "currentPixelHeight": 800,
+      "touch": [
+        "SINGLE"
+      ],
+      "video": {
+        "codecs": [
+          "H_264_42",
+          "H_264_41"
+        ]
+      }
+    },
+    "Extensions": {
+      "available": {
+        "aplext:backstack:10": {}
+      }
+    },
+    "System": {
+      "application": {
+        "applicationId": "amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763"
+      },
+      "user": {
+        "userId": "amzn1.ask.account.AMASNF3KSDMAQSKOF7U4UGDKWHFGWCTU562KUYGJZEI55LHUIZ44QZI3CFTJHNFVQGJTXLQ735FLVXU7UML4O5MJCED4AKG7XGNIVNQTV4V3GDTC6W2RAMYKZNSZ6TCGJNEM7ZNRFIRXNWAPYCJIK6UQVP4LQCT4JZAC4VZGLNGKX3WF2IVDMCOXT2XCKQOAF42X7IAHZWHTQ7TJ5HDFYR37OXMQXMWOKVW3JAHD7BXA"
+      },
+      "device": {
+        "deviceId": "amzn1.ask.device.AMAQI7M2YXDYCE4CUDTV5I3VCIGOEND2XD52AAWEFWWYLLNFH76GGVO2CNE2ZQ7I3DLF42P2KEIS63BG2TEKJFAMQUVBX7EIWP43BVXKCDBTGQM37OWGHEJBYB2KSMPPFINUBJGKIKIIVETAEQRYYQO4RHMOQU6K6SALVZLDG4ME26C4SJRR2YURY2EG5ZM3YGFSWAEW73A74VOZ",
+        "supportedInterfaces": {}
+      },
+      "apiEndpoint": "https://api.amazonalexa.com",
+      "apiAccessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IjEifQ.eyJhdWQiOiJodHRwczovL2FwaS5hbWF6b25hbGV4YS5jb20iLCJpc3MiOiJBbGV4YVNraWxsS2l0Iiwic3ViIjoiYW16bjEuYXNrLnNraWxsLjcyZDhjZTM1LTY1MzItNDgxZi1hZWNiLWI3MTQ5MDE1Zjc2MyIsImV4cCI6MTY4ODUwNjQ0MCwiaWF0IjoxNjg4NTA2MzgwLCJuYmYiOjE2ODg1MDYzODAsInByaXZhdGVDbGFpbXMiOnsiY29udGV4dCI6IkFBQUFBQUFBQUFEU2RnVCthRlBJM0EwQW04dnhQK0JOS3dFQUFBQUFBQURtdkYwamI0N21uZTFxb1VPVlB5dXRNK2RYdjRqRlpScUJBYVZhamtVUGxER3pFVmhRMjhTWUJhNmtVM2hGTXM5S01WVWRIU1daZDNsWklRemFRTW1ZUCtxSWlXSmcvWnJVd1JZaW56VWViUzNwbDZHbWEzdE5CUFJFMXFOVjR6NVY1ZEFLYUxmaWRmeEFBYi9id3B1b3o4WFRwV0Mwby9VTkd2L3JLRVdSMitaVlNMK0F5dEdqL3Arbk1qNG9razl6TTE4ZVowVHZRbC9LT05MdkpxRDEwV1J3ckgyR1hqeG1iL21GSm9FVlB6Y0dUWjh2Y3hhZlBmQ2h6am9tTGZuR0x6UWVEYWgwcHQ3aGtFZisvbFVhdU9NeHhISmI3UTRENVMvTzl0eUYzMUVQbm5YOWUvVDdZYW1QeURCRXFlVEh0eXY5QytQTUVMWXp1c0ZRVHRXUlJHUTdFa2JIYzNveUJMZUkzcmJyRi9lc3dVSWg3NjEvRk45eFpCbGpzVnlqb1BLUGJ4N3QxS29TaVE9PSIsImRldmljZUlkIjoiYW16bjEuYXNrLmRldmljZS5BTUFRSTdNMllYRFlDRTRDVURUVjVJM1ZDSUdPRU5EMlhENTJBQVdFRldXWUxMTkZINzZHR1ZPMkNORTJaUTdJM0RMRjQyUDJLRUlTNjNCRzJURUtKRkFNUVVWQlg3RUlXUDQzQlZYS0NEQlRHUU0zN09XR0hFSkJZQjJLU01QUEZJTlVCSkdLSUtJSVZFVEFFUVJZWVFPNFJITU9RVTZLNlNBTFZaTERHNE1FMjZDNFNKUlIyWVVSWTJFRzVaTTNZR0ZTV0FFVzczQTc0Vk9aIiwidXNlcklkIjoiYW16bjEuYXNrLmFjY291bnQuQU1BU05GM0tTRE1BUVNLT0Y3VTRVR0RLV0hGR1dDVFU1NjJLVVlHSlpFSTU1TEhVSVo0NFFaSTNDRlRKSE5GVlFHSlRYTFE3MzVGTFZYVTdVTUw0TzVNSkNFRDRBS0c3WEdOSVZOUVRWNFYzR0RUQzZXMlJBTVlLWk5TWjZUQ0dKTkVNN1pOUkZJUlhOV0FQWUNKSUs2VVFWUDRMUUNUNEpaQUM0VlpHTE5HS1gzV0YySVZETUNPWFQyWENLUU9BRjQyWDdJQUhaV0hUUTdUSjVIREZZUjM3T1hNUVhNV09LVlczSkFIRDdCWEEifX0.VmWq6tnUEhFluEEqYiyWp0T3Is0oA83kvjsdpR7pdjVkZO7AYaIodv4GCJnSRsgZkUrsFHkV24D2OwOXTlANggAJxNGsrsEgF4wScMU_mtYi3MDw2prtd3XKkhSinB5GCnchTbUOlYKbbbj1qaqhaN7WrkA4Geq15gP9yBFKvSyTi7YNV6TCtTZ-AmFI8dQvsBqva0ye63ww0XWaCQzMdvl6cGuZdfLmsZYldDPP2ZUvrsGCbDAsYsfJUdl1f-2rpqLej5sD5_mTj0J1Z1pZoNmqUC5xATht9SRu_VqIwg-BleTY6BGvcipMVFzsLqQdkup-VqiPZ4jbELoW39UoiA"
+    }
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "amzn1.echo-api.request.8ae72e41-f717-46cc-8774-38087c8a80d1",
+    "locale": "en-US",
+    "timestamp": "2023-07-04T21:33:01Z",
+    "intent": {
+      "name": "MakeReservation",
+      "confirmationStatus": "NONE",
+      "slots": {
+        "NumberOfPeople": {
+          "name": "NumberOfPeople",
+          "value": "5",
+          "confirmationStatus": "NONE",
+          "source": "USER"
+        },
+        "RestaurantLocation": {
+          "name": "RestaurantLocation",
+          "value": "Mumbai",
+          "resolutions": {
+            "resolutionsPerAuthority": [
+              {
+                "authority": "amzn1.er-authority.echo-sdk.amzn1.ask.skill.72d8ce35-6532-481f-aecb-b7149015f763.RestLocationCity",
+                "status": {
+                  "code": "ER_SUCCESS_MATCH"
+                },
+                "values": [
+                  {
+                    "value": {
+                      "name": "Mumbai",
+                      "id": "8ebaad59980c95ade797c903761fa815"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "confirmationStatus": "NONE",
+          "source": "USER"
+        },
+        "ReservationTime": {
+          "name": "ReservationTime",
+          "value": "18:00",
+          "confirmationStatus": "NONE",
+          "source": "USER"
+        },
+        "PersonName": {
+          "name": "PersonName",
+          "value": "Shane",
+          "confirmationStatus": "NONE",
+          "source": "USER"
+        },
+        "ReservationDate": {
+          "name": "ReservationDate",
+          "value": "2020-01-15",
+          "confirmationStatus": "NONE",
+          "source": "USER"
+        }
+      }
+    },
+    "dialogState": "COMPLETED"
+  }
+}

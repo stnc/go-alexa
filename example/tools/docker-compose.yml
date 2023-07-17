@@ -1,16 +1,15 @@
 version: '3.5'
 services:
   # docker-compose up -d --build
-  # docker da terminali ac
+  # docker application in terminal
   # cd /data/postgres
   # echo "host all all all $POSTGRES_HOST_AUTH_METHOD" >> pg_hba.conf
-  #pgadmine girilecek hostname adi localhost degil -> postgres_container olacak
 
   #redis
   # apk update
   # apk add nano
   # redis-cli
-  # CONFIG SET requirepass MDNcVb924a
+  # CONFIG SET requirepass 555555
 
   postgres:
     container_name: postgres_container

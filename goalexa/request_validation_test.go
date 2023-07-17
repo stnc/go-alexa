@@ -1,62 +1,19 @@
 package goalexa
 
 import (
-	"os"
-	"testing"
-)
-
-///https://github.com/patst/alexa-skills-kit-for-go/blob/master/alexa/http_test.go
-
-import (
 	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strings"
+	"testing"
 )
 
 // https://developer.amazon.com/en-US/docs/alexa/custom-skills/host-a-custom-skill-as-a-web-service.html#check-request-signature
+
 func Test_validateAlexaRequest(t *testing.T) {
 
-	//	payload := strings.NewReader(`{
-	//    "version": "1.0",
-	//    "session": {
-	//        "new": true,
-	//        "sessionId": "amzn1.echo-api.session.32bed169-e348-4693-b3b6-b19e7065840d",
-	//        "application": {
-	//            "applicationId": "amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa"
-	//        },
-	//        "attributes": {},
-	//        "user": {
-	//            "userId": "amzn1.ask.account.AE4GAC2H2PZKDFCKBOBABXRT53B6"
-	//        }
-	//    },
-	//    "context": {
-	//
-	//        "System": {
-	//            "application": {
-	//                "applicationId": "amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa"
-	//            },
-	//            "user": {
-	//                "userId": "amzn1.ask.account.AE4GAC2H2PZKDFC"
-	//            },
-	//            "device": {
-	//                "deviceId": "amzn1.ask.device.AHISQFS2N3CVSZVHC5O5SDO",
-	//                "supportedInterfaces": {}
-	//            },
-	//            "apiEndpoint": "https://api.amazonalexa.com",
-	//            "apiAccessToken": "eyJ0eXAiOiJ"
-	//        }
-	//    },
-	//    "request": {
-	//        "type": "LaunchRequest",
-	//        "requestId": "amzn1.echo-api.request.eea1669b-2d25-4078-8329-acada1c0be63",
-	//        "locale": "en-US",
-	//        "timestamp": "2023-07-10T06:34:03Z",
-	//        "shouldLinkResultBeReturned": false
-	//    }
-	//}`)
-	//
-	jsonData, err := os.ReadFile("../mocks/requestEnvelope.json")
+	jsonData, err := os.ReadFile("../mocks/requestEnvelope_SHA1.json")
 	if err != nil {
 		panic(err)
 	}
@@ -109,9 +66,4 @@ func Test_verifyCertURL(t *testing.T) {
 		}
 
 	}
-
 }
-
-//var (
-//	cachedCert *x509.Certificate
-//)

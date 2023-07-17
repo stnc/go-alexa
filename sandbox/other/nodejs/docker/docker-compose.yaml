@@ -1,0 +1,83 @@
+version: "3.1"
+#docker-compose up -d --build
+# https://nemoz.info/run-mysql-from-docker-and-allow-access-from-outside-container/
+#https://linuxhandbook.com/get-container-ip/ 
+#https://webdock.io/en/docs/how-guides/database-guides/how-enable-remote-access-your-mariadbmysql-database
+
+# ------ long way --------
+# apt update
+# apt install nano 
+# nano /etc/mysql/my.cnf  or sudo nano /etc/mysql/mariadb.conf.d/50-server.cnf
+# service mariadb restart
+
+# ------ shortcut --------
+# echo "bind-address = 0.0.0.0" >> /etc/mysql/my.cnf
+
+# not important -- maybe use !!!
+# mariadb -u root -p
+# grant all privileges on *.* to 'root'@'%' identified by 'root';    
+# flush privileges;
+services:
+  mysql_db_container:
+    container_name: 'stnc-mysql'
+    # platform: linux/x86_64
+    platform: linux/arm64/v8
+    # image: mariadb:10.6
+    # image: mysql:8
+    image: mariadb
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      MYSQL_ROOT_PASSWORD: selman123
+    ports:
+      - 3306:3306
+    volumes:
+      - mysql_db_data_container:/var/mysql/data
+    networks:
+      static-network-stnc:
+          ipv4_address: 172.60.128.2
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: ['CMD', '/opt/bitnami/scripts/mysql/healthcheck.sh']
+      interval: 15s
+      timeout: 5s
+      retries: 6
+
+  phpmyadmin:
+    container_name: 'stnc-phpmyadmin'
+    image: phpmyadmin
+    restart: unless-stopped
+    environment:
+      PMA_HOST: mysql_db_container
+    depends_on:
+      - mysql_db_container
+    ports:
+      - "9191:80"
+    networks:
+      - static-network-stnc
+
+  adminer:
+    container_name: 'stnc-adminer'
+    image: adminer:latest
+    restart: unless-stopped
+    ports:
+      - 8000:8080
+    depends_on:
+     - mysql_db_container
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql_db_container
+    networks:
+    - static-network-stnc
+#https://www.baeldung.com/ops/docker-communicating-with-containers-on-same-machine -- ayrica evernote da yedegi var 
+networks:
+  static-network-stnc:
+    driver: bridge
+    ipam:
+       config:
+         - subnet: 172.60.0.0/16
+           #docker-compose v3+ do not use ip_range
+           ip_range: 172.65.5.0/24
+           #gateway: 10.5.0.1
+
+volumes:
+  mysql_db_data_container:     

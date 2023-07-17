@@ -45,14 +45,7 @@ func GetDeviceTimeZone(ctx context.Context, reqRoot *alexaapi.RequestRoot) (stri
 	return string(bodyBytes), nil
 }
 
-func alexaApiGetCredentials(
-	ctx context.Context,
-	reqRoot *alexaapi.RequestRoot,
-) (
-	apiEndpoint string,
-	apiAccessToken string,
-	deviceId string,
-	err error,
+func alexaApiGetCredentials(ctx context.Context, reqRoot *alexaapi.RequestRoot) (apiEndpoint string, apiAccessToken string, deviceId string, err error,
 ) {
 	if reqRoot == nil {
 		err = fmt.Errorf("reqRoot is nil")
