@@ -37,8 +37,12 @@ aHxzu2smLRzQSttTXfuemCijTigg==`
 	if errValidate != nil {
 		t.Errorf("expected error to be nil got %v", errValidate)
 	}
-
 }
+
+func Test_getX509Certificate(t *testing.T) {
+	//Im stayed
+}
+
 func Test_verifyCertURL(t *testing.T) {
 	//https://developer.amazon.com/en-US/docs/alexa/custom-skills/host-a-custom-skill-as-a-web-service.html#check-request-signature
 	primeTests := []struct {

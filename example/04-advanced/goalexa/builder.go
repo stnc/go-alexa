@@ -1,9 +1,12 @@
 package goalexa
 
 import (
+	"avia/goalexa/alexaapi"
 	"encoding/json"
-	"github.com/aivahealth/goalexa/alexaapi"
 )
+
+//https://github.com/ericdaugherty/alexa-skills-kit-golang/blob/master/alexa.go#L163
+//https://github.com/mikeflynn/go-alexa/blob/master/skillserver/echo.go
 
 type Builder alexaapi.ResponseRoot
 
@@ -101,6 +104,23 @@ func (build *Builder) RepromptSSML(text string) *Builder {
 	myOutputSpeech.Text = text
 	myOutputSpeech.Type = alexaapi.OutputSpeechTypeSSML
 	build.Response.Reprompt.OutputSpeech = &myOutputSpeech
+	return build
+}
+
+// AddAudioPlayer adds an AudioPlayer directive to the Response.
+func (build *Builder) AddAudioPlayer(streamToken, url string, offsetInMilliseconds uint64) *Builder {
+	directiveAudioPlayerPlay := alexaapi.DirectiveAudioPlayerPlay{
+		Type:         alexaapi.DirectiveTypeUnspecified,
+		PlayBehavior: alexaapi.AudioPlayerPlayBehaviorUnspecified,
+		AudioItem: &alexaapi.AudioPlayerAudioItem{
+			Stream: alexaapi.AudioItemStream{
+				Token:                streamToken,
+				Url:                  url,
+				OffsetInMilliseconds: offsetInMilliseconds,
+			},
+		},
+	}
+	build.Response.Directives = append(build.Response.Directives, directiveAudioPlayerPlay)
 	return build
 }
 

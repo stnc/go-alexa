@@ -6,5 +6,5 @@ package alexaapi
 
 type CanFulfillIntentRequest struct {
 	RequestCommon
-	Intent      *Intent     `json:"intent,omitempty"`
+	Intent *Intent `json:"intent,omitempty"`
 }

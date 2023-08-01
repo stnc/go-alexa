@@ -36,7 +36,6 @@ func DbConnect() *gorm.DB {
 
 	//DBURL := "root:sel123C#@tcp(127.0.0.1:3306)/gorm?charset=utf8mb4&parseTime=True&loc=Local" //mysql
 	var DBURL string
-
 	if dbdriver == "mysql" {
 		DBURL = dbUser + ":" + dbPassword + "@tcp(" + dbHost + ":" + dbPort + ")/" + dbName + "?charset=utf8mb4&collation=utf8mb4_unicode_ci&parseTime=True&loc=Local"
 	} else if dbdriver == "postgres" {
@@ -65,9 +64,7 @@ func DbConnect() *gorm.DB {
 		db.LogMode(false)
 	}
 	DB = db
-
 	db.SingularTable(true)
-
 	return db
 }
 

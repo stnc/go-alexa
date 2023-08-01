@@ -14,11 +14,11 @@ func Test_EscapeSSMLText(t *testing.T) {
              labor et dolore magna aliqua. In ante metus dictum at. Scelerisque purus semper
              eget duis at tellus at urna condimentum.<speak> `
 
-	text1Convert := "&amp;"
-	text2Convert := "&quot;"
-	text3Convert := "&apos;"
-	text4Convert := "&lt;"
-	text5Convert := "&gt;"
+	text1Expected := "&amp;"
+	text2Expected := "&quot;"
+	text3Expected := "&apos;"
+	text4Expected := "&lt;"
+	text5Expected := "&gt;"
 
 	primeTests := []struct {
 		status   string
@@ -28,17 +28,17 @@ func Test_EscapeSSMLText(t *testing.T) {
 		expected bool
 		msg      string
 	}{
-		{"valid", text1, "&", text1Convert, true, "expected : " + text1Convert},
-		{"valid", text2, "\"", text2Convert, true, "expected : " + text2Convert},
-		{"valid", text3, "'", text3Convert, true, "expected : " + text3Convert},
-		{"valid", text4, "<", text4Convert, true, "expected :" + text4Convert},
-		{"valid", text4, ">", text5Convert, true, "expected :" + text5Convert},
+		{"valid", text1, "&", text1Expected, true, "expected : " + text1Expected},
+		{"valid", text2, "\"", text2Expected, true, "expected : " + text2Expected},
+		{"valid", text3, "'", text3Expected, true, "expected : " + text3Expected},
+		{"valid", text4, "<", text4Expected, true, "expected :" + text4Expected},
+		{"valid", text4, ">", text5Expected, true, "expected :" + text5Expected},
 
-		{"invalid", text1, "&", "=", false, "expected : " + text1Convert},
-		{"invalid", text2, "\"", "*", false, "expected : " + text2Convert},
-		{"invalid", text3, "'", "$", false, "expected : " + text3Convert},
-		{"invalid", text4, "<", "@", false, "expected :" + text4Convert},
-		{"invalid", text4, ">", "-", false, "expected :" + text5Convert},
+		{"invalid", text1, "&", "=", false, "expected : " + text1Expected},
+		{"invalid", text2, "\"", "*", false, "expected : " + text2Expected},
+		{"invalid", text3, "'", "$", false, "expected : " + text3Expected},
+		{"invalid", text4, "<", "@", false, "expected :" + text4Expected},
+		{"invalid", text4, ">", "-", false, "expected :" + text5Expected},
 	}
 
 	for _, e := range primeTests {

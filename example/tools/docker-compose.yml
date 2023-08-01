@@ -11,6 +11,12 @@ services:
   # redis-cli
   # CONFIG SET requirepass 555555
 
+#  ==== REMEMBER ADMINER LOGIN ====
+#  Server: postgres_container
+#  Username: postgres
+#  Password changeme
+
+
   postgres:
     container_name: postgres_container
     image: postgres:14.1
