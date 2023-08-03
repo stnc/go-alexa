@@ -37,10 +37,26 @@ aHxzu2smLRzQSttTXfuemCijTigg==`
 	if errValidate != nil {
 		t.Errorf("expected error to be nil got %v", errValidate)
 	}
+	if errValidate == nil {
+		t.Errorf("no problem  %v", errValidate)
+	}
 }
 
 func Test_getX509Certificate(t *testing.T) {
-	//Im stayed
+	certURL := "https://s3.amazonaws.com/echo.api/echo-api-cert-23.pem"
+	_, errValidate := getX509Certificate(certURL)
+
+
+	t.Run("valid case", func(t *testing.T) {
+
+
+	}
+	//if errValidate != nil {
+	//	t.Errorf("expected error to be nil got %v", errValidate)
+	//}
+	//if errValidate == nil {
+	//	t.Errorf("no problem  %v", errValidate)
+	//}
 }
 
 func Test_verifyCertURL(t *testing.T) {

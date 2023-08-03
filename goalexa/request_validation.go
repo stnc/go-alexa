@@ -39,7 +39,7 @@ func validateAlexaRequest(w http.ResponseWriter, r *http.Request) error {
 	if time.Now().Unix() < cert.NotBefore.Unix() || time.Now().Unix() > cert.NotAfter.Unix() {
 		cachedCert = nil
 		// try again
-		//return validateAlexaRequest(w, r)  //TODO not compatible with test
+		//return validateAlexaRequest(w, r) //TODO not compatible with test
 		return fmt.Errorf("Invalid Amazon certificate date")
 	}
 
