@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/gol-alexa.iml" filepath="$PROJECT_DIR$/.idea/gol-alexa.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../testSuite/.idea/testSuite.iml" filepath="$PROJECT_DIR$/../testSuite/.idea/testSuite.iml" />
     </modules>
   </component>
 </project>
