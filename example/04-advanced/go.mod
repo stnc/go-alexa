@@ -3,7 +3,6 @@ module avia
 go 1.18
 
 require (
-	github.com/aivahealth/goalexa v0.0.0-20230516173100-53ea91783d36
 	github.com/flosch/pongo2/v5 v5.0.0
 	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1

@@ -3,7 +3,6 @@ module avia
 go 1.18
 
 require (
-	github.com/aivahealth/goalexa v0.0.0-20230516173100-53ea91783d36
 	github.com/joho/godotenv v1.5.1
 	go.uber.org/zap v1.24.0 // indirect
 )
