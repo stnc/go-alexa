@@ -6,8 +6,8 @@ import (
 	"io"
 	"net/http"
 
-	"avia/goalexa/alexaapi"
 	"go.uber.org/zap"
+	"stnc/mygoalexa/alexaapi"
 )
 
 // Helpers for accessing the Alexa Settings API

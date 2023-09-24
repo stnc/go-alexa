@@ -1,7 +1,6 @@
-package goalexa
+package mymygoalexa
 
 import (
-	"avia/goalexa/alexaapi"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -10,6 +9,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"stnc/mygoalexa/alexaapi"
 )
 
 type RequestHandler interface {
@@ -71,12 +71,12 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if os.Getenv("GOALEXA_DUMP") != "" {
+	if os.Getenv("mygoalexa_DUMP") != "" {
 		trash := map[string]any{}
 		json.Unmarshal(requestJson, &trash)
 
 		var requestJsonPretty []byte
-		if os.Getenv("GOALEXA_DUMP") == "full" {
+		if os.Getenv("mygoalexa_DUMP") == "full" {
 			requestJsonPretty, _ = json.MarshalIndent(trash, "", "    ")
 		} else {
 			requestJsonPretty, _ = json.MarshalIndent(trash["request"], "", "    ")
@@ -134,7 +134,7 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if response == nil {
-		if os.Getenv("GOALEXA_DUMP") != "" {
+		if os.Getenv("mygoalexa_DUMP") != "" {
 			Logger.Debug("<- <- <- To Alexa (http 200, empty body)")
 		}
 		w.WriteHeader(http.StatusOK)
@@ -158,7 +158,7 @@ func (s *Skill) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if os.Getenv("GOALEXA_DUMP") != "" {
+	if os.Getenv("mygoalexa_DUMP") != "" {
 		responseJsonPretty, _ := json.MarshalIndent(&response, "", "    ")
 		Logger.Debug(fmt.Sprintf("<- <- <- To Alexa: %s", string(responseJsonPretty)))
 	}

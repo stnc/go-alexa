@@ -1,8 +1,8 @@
-package goalexa
+package mygoalexa
 
 import (
-	"avia/goalexa/alexaapi"
 	"encoding/json"
+	"stnc/mygoalexa/alexaapi"
 )
 
 //https://github.com/ericdaugherty/alexa-skills-kit-golang/blob/master/alexa.go#L163

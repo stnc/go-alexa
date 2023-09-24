@@ -1,1 +1,1 @@
-package goalexa
+package mygoalexa

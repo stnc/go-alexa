@@ -4,9 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"github.com/aivahealth/goalexa"
-	"github.com/aivahealth/goalexa/alexaapi"
 	"github.com/joho/godotenv"
+	"github.com/stnc/mygoalexa/alexaapi"
 	"net/http"
 )
 
@@ -20,14 +19,14 @@ func init() {
 type LaunchNew struct{}
 
 func main() {
-	skill := goalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa")
+	skill := mygoalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa")
 	skill.RegisterHandlers(&LaunchNew{})
 	http.HandleFunc("/alexa", skill.ServeHTTP)
 	var port string = "9095"
 	fmt.Println("server running localhost:" + port)
 	http.ListenAndServe(":"+port, nil)
 }
-func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
+func (h *LaunchNew) Handle(ctx context.Context, skill *mygoalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
 
 	requestType := requestRoot.Request.GetType()
 	fmt.Println(requestType)
@@ -62,6 +61,6 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 	json.Unmarshal([]byte(responseJson), &response)
 	return &response, nil
 }
-func (h *LaunchNew) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
+func (h *LaunchNew) CanHandle(ctx context.Context, skill *mygoalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
 	return true
 }

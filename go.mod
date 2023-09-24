@@ -1,9 +1,8 @@
-module avia
+module mygoalexa
 
 go 1.18
 
 require (
-	github.com/aivahealth/goalexa v0.0.0-20230516173100-53ea91783d36
 	go.uber.org/zap v1.24.0
 )
 

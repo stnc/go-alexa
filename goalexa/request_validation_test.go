@@ -1,4 +1,4 @@
-package goalexa
+package mygoalexa
 
 import (
 	"fmt"

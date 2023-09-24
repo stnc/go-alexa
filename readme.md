@@ -8,12 +8,12 @@ Go library to easily handle Alexa custom skill requests, conforming to the offic
 
 A working example for developing [Alexa Skills Kit](http://developer.amazon.com/public/solutions/alexa/alexa-skills-kit)
 
-It contains examples and tests and mocks  [see] (https://github.com/aivahealth/goalexa/tree/master/example)
+It contains examples and tests and mocks  [see] (https://github.com/stnc/mygoalexa/tree/master/example)
 
 ## Requirements && Installation
 
 1. [Golang](https://golang.org/) v1.6+
-2. `go get github.com/aivahealth/goalexa`
+2. `go get github.com/stnc/mygoalexa`
 
 
 ## faster example 
@@ -26,8 +26,8 @@ import (
 "context"
 "encoding/json"
 "fmt"
-"github.com/aivahealth/goalexa"
-"github.com/aivahealth/goalexa/alexaapi"
+"github.com/stnc/mygoalexa"
+"github.com/stnc/mygoalexa/alexaapi"
 "github.com/joho/godotenv"
 "net/http"
 )
@@ -42,14 +42,14 @@ fmt.Println("no env gotten")
 type LaunchNew struct{}
 
 func main() {
-skill := goalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa")
+skill := mygoalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa258929aa")
 skill.RegisterHandlers(&LaunchNew{})
 http.HandleFunc("/alexa", skill.ServeHTTP)
 var port string = "9095"
 fmt.Println("server running localhost:" + port)
 http.ListenAndServe(":"+port, nil)
 }
-func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
+func (h *LaunchNew) Handle(ctx context.Context, skill *mygoalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
 
 	requestType := requestRoot.Request.GetType()
 	fmt.Println(requestType)
@@ -74,7 +74,7 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 	json.Unmarshal([]byte(responseJson), &response)
 	return &response, nil
 }
-func (h *LaunchNew) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
+func (h *LaunchNew) CanHandle(ctx context.Context, skill *mygoalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
 return true
 }
 ```
@@ -108,7 +108,7 @@ fmt.Println(intent)
 type LaunchReq struct{}
 
 func main() {
-skill := goalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa25892900")
+skill := mygoalexa.NewSkill("amzn1.ask.skill.d89b3e52-2d85-4693-a664-bcaa25892900")
 skill.RegisterHandlers(&LaunchReq{})
 http.HandleFunc("/alexa", skill.ServeHTTP)
 var port string = "9095"
@@ -116,7 +116,7 @@ fmt.Println("server running localhost:" + port)
 http.ListenAndServe(":"+port, nil)
 }
 
-func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
+func (h *LaunchReq) Handle(ctx context.Context, skill *mygoalexa.Skill, requestRoot *alexaapi.RequestRoot) (*alexaapi.ResponseRoot, error) {
 
 	requestType := requestRoot.Request.GetType()
 	fmt.Println(requestType)
@@ -175,11 +175,19 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *goalexa.Skill, requestRoo
 	}
 	return &response, nil
 }
-func (h *LaunchReq) CanHandle(ctx context.Context, skill *goalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
+func (h *LaunchReq) CanHandle(ctx context.Context, skill *mygoalexa.Skill, requestRoot *alexaapi.RequestRoot) bool {
 return true
 }
 ```
 ## Test
 
-required postman, json and docker also [see here ](https://github.com/aivahealth/goalexa/tree/master/example/tools) for ready postresql application
+required postman, json and docker also [see here ](https://github.com/stnc/mygoalexa/tree/master/example/tools) for ready postresql application
 .
+
+## FORKED
+
+required postman, json and docker also [see here ](https://github.com/stnc/mygoalexa/tree/master/example/tools) for ready postresql application
+
+
+sddd
+
