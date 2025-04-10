@@ -9,7 +9,7 @@ import (
 	"io"
 	"net/http"
 	"os"
-	"stnc/mygoalexa/alexaapi"
+	"github.com/stnc/mygoalexa"
 )
 
 type RequestHandler interface {
@@ -30,7 +30,6 @@ func (hg HandlerGroup) Handle(ctx context.Context, s *Skill, reqRoot *alexaapi.R
 
 type Skill struct {
 	Config any
-
 	applicationId string
 	handlers      HandlerGroup
 }
