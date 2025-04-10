@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"go.uber.org/zap"
-	"stnc/mygoalexa/alexaapi"
+	"github.com/stnc/mygoalexa"
 )
 
 // Helpers for accessing the Alexa Settings API
