@@ -5,12 +5,12 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/stnc/mygoalexa"
+	"github.com/stnc/mygoalexa/alexaapi"
 	"go.uber.org/zap"
 	"io"
 	"net/http"
 	"os"
-	"github.com/stnc/mygoalexa"
-	"github.com/stnc/mygoalexa/alexaapi"
 )
 
 type RequestHandler interface {
@@ -30,7 +30,7 @@ func (hg HandlerGroup) Handle(ctx context.Context, s *Skill, reqRoot *alexaapi.R
 }
 
 type Skill struct {
-	Config any
+	Config        any
 	applicationId string
 	handlers      HandlerGroup
 }
