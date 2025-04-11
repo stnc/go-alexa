@@ -42,6 +42,7 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *mygoalexa.Skill, requestR
 
 	if requestType == "LaunchRequest" {
 		text := "Hi! Welcome to Diet Application"
+		
 		var myOutputSpeech alexaapi.OutputSpeech
 		myOutputSpeech.Text = text
 		myOutputSpeech.Type = alexaapi.OutputSpeechTypeSSML
@@ -57,7 +58,6 @@ func (h *LaunchReq) Handle(ctx context.Context, skill *mygoalexa.Skill, requestR
 		var myReprompt alexaapi.Reprompt
 		myReprompt.OutputSpeech = &myOutputSpeech
 		response.Response.Reprompt = &myReprompt
-
 		response.Response.ShouldEndSession = &x
 	}
 
