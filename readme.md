@@ -23,7 +23,7 @@ import (
 "encoding/json"
 "fmt"
 "github.com/stnc/mygoalexa"
-"github.com/stnc/mygoalexa/mygoalexa"
+"github.com/stnc/mygoalexa/alexaapi"
 "github.com/joho/godotenv"
 "net/http"
 )

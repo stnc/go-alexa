@@ -13,7 +13,7 @@ import (
 
 func Test_validateAlexaRequest(t *testing.T) {
 
-	jsonData, err := os.ReadFile("../mocks/requestEnvelope_SHA1.json")
+	jsonData, err := os.ReadFile("mocks/requestEnvelope_SHA1.json")
 	if err != nil {
 		panic(err)
 	}
