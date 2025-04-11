@@ -33,7 +33,7 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *mygoalexa.Skill, requestR
 	fmt.Println(requestType)
 
 	var response alexaapi.ResponseRoot
-	var builder Builder
+	var builder mygoalexa.Builder
 
 	if requestType == "LaunchRequest" {
 		text := "Hi! Welcome to Diet Application"
@@ -54,7 +54,7 @@ func (h *LaunchNew) Handle(ctx context.Context, skill *mygoalexa.Skill, requestR
 		json.Unmarshal(requestJson, &requestIntent)
 		numberOfPeopleIntentValue := requestIntent.Intent.Slots["NumberOfPeople"].Value
 		fmt.Println(numberOfPeopleIntentValue)
-		intent := GetIntent(requestRoot, "RemindTime")
+		intent := mygoalexa.GetIntent(requestRoot, "RemindTime")
 		fmt.Println(intent)
 	}
 
