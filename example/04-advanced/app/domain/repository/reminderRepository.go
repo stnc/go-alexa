@@ -1,7 +1,7 @@
 package dbRepository
 
 import (
-	"github.com/stnc/mygoalexa/app/domain/entity"
+	"avia/app/domain/entity"
 	"errors"
 	"strings"
 

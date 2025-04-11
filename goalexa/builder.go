@@ -3,6 +3,7 @@ package mygoalexa
 import (
 	"encoding/json"
 	"github.com/stnc/mygoalexa"
+	"github.com/stnc/mygoalexa/alexaapi"
 )
 
 //https://github.com/ericdaugherty/alexa-skills-kit-golang/blob/master/alexa.go#L163

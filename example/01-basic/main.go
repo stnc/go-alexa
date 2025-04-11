@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"github.com/joho/godotenv"
-	"github.com/stnc/mygoalexa"
+	 "github.com/stnc/mygoalexa"
 	"github.com/stnc/mygoalexa/alexaapi"
 	"net/http"
 )

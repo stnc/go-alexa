@@ -1,15 +1,15 @@
 package main
 
 import (
-	cms "github.com/stnc/mygoalexa/app/controller"
-	"github.com/stnc/mygoalexa/app/domain/entity"
-	repository "github.com/stnc/mygoalexa/app/domain/repository"
+	cms "avia/app/controller"
+	"avia/app/domain/entity"
+	repository "avia/app/domain/repository"
 	"context"
 	"encoding/json"
 	"fmt"
 	"github.com/joho/godotenv"
 	"net/http"
-	"github.com/stnc/mygoalexa"
+	 "github.com/stnc/mygoalexa"
 	"github.com/stnc/mygoalexa/alexaapi"
 )
 
@@ -32,7 +32,7 @@ func main() {
 	services.Automigrate()
 	reminder := cms.InitReminderControl(services.Reminder)
 
-	skill := mygoalexa.NewSkill("amzn1.ask.skill.xxxxx")
+	skill := mygoalexa.NewSkill("amzn1.ask.skill.27650f59-7c37-441f-8a7d-1a89bf595445")
 	skill.RegisterHandlers(&LaunchNew{})
 
 	http.HandleFunc("/alexa", skill.ServeHTTP)

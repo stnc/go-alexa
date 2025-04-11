@@ -1,4 +1,4 @@
-module github.com/stnc/mygoalexa
+module github.com/stnc/alexaapi
 
 go 1.18
 

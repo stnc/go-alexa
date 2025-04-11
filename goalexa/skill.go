@@ -1,4 +1,4 @@
-package mymygoalexa
+package mygoalexa
 
 import (
 	"bytes"
@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"os"
 	"github.com/stnc/mygoalexa"
+	"github.com/stnc/mygoalexa/alexaapi"
 )
 
 type RequestHandler interface {

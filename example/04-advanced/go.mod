@@ -1,8 +1,9 @@
-module github.com/stnc/mygoalexa
+module avia
 
 go 1.18
 
 require (
+	github.com/stnc/mygoalexa v0.0.0-20250411012946-8566e9edc41b // indirect
 	github.com/flosch/pongo2/v5 v5.0.0
 	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1
@@ -34,6 +35,7 @@ require (
 )
 
 require (
+
 	github.com/tidwall/gjson v1.14.4 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
 	go.uber.org/multierr v1.6.0 // indirect
