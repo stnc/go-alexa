@@ -3,7 +3,7 @@ package dbRepository
 // --------------not finished yet -------
 
 import (
-	"avia/app/domain/entity"
+	"github.com/stnc/mygoalexa/app/domain/entity"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

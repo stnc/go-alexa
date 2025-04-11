@@ -1,8 +1,8 @@
 package dbRepository
 
 import (
-	"avia/app/domain/entity"
-	services "avia/app/services"
+	"github.com/stnc/mygoalexa/app/domain/entity"
+	services "github.com/stnc/mygoalexa/app/services"
 	"fmt"
 	"github.com/hypnoglow/gormzap"
 	"github.com/jinzhu/gorm"

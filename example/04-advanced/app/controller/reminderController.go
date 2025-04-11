@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"avia/app/domain/entity"
-	repository "avia/app/domain/repository"
+	"github.com/stnc/mygoalexa/app/domain/entity"
+	repository "github.com/stnc/mygoalexa/app/domain/repository"
 	"avia/app/services"
 	"github.com/flosch/pongo2/v5"
 	"log"

@@ -185,5 +185,5 @@ required postman, json and docker also [see here ](https://github.com/stnc/mygoa
 required postman, json and docker also [see here ](https://github.com/stnc/mygoalexa/tree/master/example/tools) for ready postresql application
 
 
-sddd
+[FORKED by ](https://github.com/aivahealth/goalexa)
 

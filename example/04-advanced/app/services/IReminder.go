@@ -1,7 +1,7 @@
 package services
 
 import (
-	"avia/app/domain/entity"
+	"github.com/stnc/mygoalexa/app/domain/entity"
 )
 
 // ReminderAppInterface interface
